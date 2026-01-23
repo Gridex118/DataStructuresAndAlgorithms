@@ -3,6 +3,7 @@ mod find_unique;
 mod find_duplicate;
 mod array_intersection;
 mod pair_sum;
+mod triplet_sum;
 
 fn main() {
     let mut arr1: [i32; 8] = [ 5, 2, 9, 4, 7, 6, 1, 0 ];
@@ -17,4 +18,6 @@ fn main() {
     println!("The intersection vector is: {:?}", array_intersection::intersection(arr41, arr42));
     let vec5: Vec<i32> = vec![2, -3, 3, 3, -2];
     println!("The pairs are: {:?}", pair_sum::get_pairs(vec5, 0));
+    let vec6: Vec<i32> = vec![1, 2, 3, 1, 2, 3];
+    println!("The triplets are: {:?}", triplet_sum::get_triples(vec6, 6));
 }
