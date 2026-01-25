@@ -1,6 +1,6 @@
-pub fn search(vec: &[i32], key: i32) -> Option<usize> {
-    let mut start: usize = 0;
-    let mut end: usize = vec.len() - 1;
+pub fn search(vec: &[i32], key: i32, _start: Option<usize>, _end: Option<usize>) -> Option<usize> {
+    let mut start: usize = _start.unwrap_or(0);
+    let mut end: usize = _end.unwrap_or(vec.len() - 1);
     while start <= end {
         let mid: usize = start + (end - start) / 2;
         if vec[mid] == key {
