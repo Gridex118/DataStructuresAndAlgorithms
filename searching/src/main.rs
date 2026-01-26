@@ -3,6 +3,7 @@ mod first_last;
 mod mountain_array;
 mod rotation_pivot;
 mod search_rotated;
+mod square_root_i;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 2, 4, 6, 8, 12, 18 ];
@@ -32,4 +33,7 @@ fn main() {
         Some(index) => println!("5. Found at index {index}"),
         None => println!("6. Key not found")
     }
+
+    let square: i32 = 15;
+    println!("6. Integral square root of {square} is {}", square_root_i::square_root(square));
 }
