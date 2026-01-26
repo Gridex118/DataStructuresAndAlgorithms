@@ -4,6 +4,7 @@ mod mountain_array;
 mod rotation_pivot;
 mod search_rotated;
 mod square_root_i;
+mod book_allocation;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 2, 4, 6, 8, 12, 18 ];
@@ -36,4 +37,9 @@ fn main() {
 
     let square: i32 = 15;
     println!("6. Integral square root of {square} is {}", square_root_i::square_root(square));
+
+    let vec6: Vec<i32> = vec![ 25, 46, 28, 49, 24 ];
+    let pages: i32 = book_allocation::get_min_maximum_pages(&vec6, 4);
+    assert_eq!(pages, 71, "7. Book Allocation Failed");
+    println!("7. Minimum allocation of maximum pages is {pages}");
 }
