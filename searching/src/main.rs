@@ -5,6 +5,7 @@ mod rotation_pivot;
 mod search_rotated;
 mod square_root_i;
 mod book_allocation;
+mod aggressive_cows;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 2, 4, 6, 8, 12, 18 ];
@@ -42,4 +43,9 @@ fn main() {
     let pages: i32 = book_allocation::get_min_maximum_pages(&vec6, 4);
     assert_eq!(pages, 71, "7. Book Allocation Failed");
     println!("7. Minimum allocation of maximum pages is {pages}");
+
+    let vec7: Vec<i32> = vec![ 4, 2, 1, 3, 6 ];
+    let distance = aggressive_cows::get_max_minimum_dist(vec7, 2);
+    assert_eq!(distance, 5, "8. Aggressive Cows Failed");
+    println!("8. The maximum minimum distance between the cows is {distance}");
 }
