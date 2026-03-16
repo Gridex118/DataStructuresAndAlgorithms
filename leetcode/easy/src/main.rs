@@ -2,6 +2,7 @@ mod pair_sum;
 mod palindrome;
 mod numerals;
 mod lcp;
+mod paren;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -15,4 +16,9 @@ fn main() {
 
     let strs: Vec<String> = vec![ "flower".to_string(), "flow".into(), "flight".into() ];
     println!("Common prefix: {}", lcp::get_prefix(strs));
+
+    assert!(paren::is_valid("()[]{}"), "()[]{{}} reported invalid");
+    assert!(paren::is_valid("([])"), "([]) reported invalid");
+    assert!(!paren::is_valid("(][)"), "(][) reported valid");
+    assert!(!paren::is_valid("([)]"), "([)] reported valid");
 }
