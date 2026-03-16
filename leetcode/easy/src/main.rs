@@ -1,6 +1,7 @@
 mod pair_sum;
 mod palindrome;
 mod numerals;
+mod lcp;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -11,4 +12,7 @@ fn main() {
 
     let roman1: String = String::from("MCMXCIV");
     println!("{roman1} as integer: {}", numerals::roman_to_int(&roman1));
+
+    let strs: Vec<String> = vec![ "flower".to_string(), "flow".into(), "flight".into() ];
+    println!("Common prefix: {}", lcp::get_prefix(strs));
 }
