@@ -4,6 +4,7 @@ mod numerals;
 mod lcp;
 mod paren;
 mod unique_array;
+mod rem_element;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -29,4 +30,11 @@ fn main() {
     println!("k = {k}");
     assert!(k == 5, "Failed to report number of unique elements");
     println!("Processed to {:?}", vec2);
+
+    let mut vec3: Vec<i32> = vec![ 0, 1, 2, 2, 3, 0, 4, 2 ];
+    println!("Vector: {:?}", vec3);
+    let k: i32 = rem_element::remove_element(&mut vec3, 2);
+    println!("k = {k}");
+    // assert!(k == 5, "Failed to report number of elements after deletion");
+    println!("Processed to {:?}", vec3);
 }
