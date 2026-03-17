@@ -3,6 +3,7 @@ mod palindrome;
 mod numerals;
 mod lcp;
 mod paren;
+mod unique_array;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -21,4 +22,11 @@ fn main() {
     assert!(paren::is_valid("([])"), "([]) reported invalid");
     assert!(!paren::is_valid("(][)"), "(][) reported valid");
     assert!(!paren::is_valid("([)]"), "([)] reported valid");
+
+    let mut vec2: Vec<i32> = vec![ 0, 0, 1, 1, 1, 2, 2, 3, 3, 4 ];
+    println!("Vector: {:?}", vec2);
+    let k: i32 = unique_array::remove_duplicates(&mut vec2);
+    println!("k = {k}");
+    assert!(k == 5, "Failed to report number of unique elements");
+    println!("Processed to {:?}", vec2);
 }
