@@ -5,6 +5,9 @@ mod lcp;
 mod paren;
 mod unique_array;
 mod rem_element;
+mod happy;
+
+use happy::is_happy;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -37,4 +40,8 @@ fn main() {
     println!("k = {k}");
     // assert!(k == 5, "Failed to report number of elements after deletion");
     println!("Processed to {:?}", vec3);
+
+    assert!(is_happy(19), "19 reported unhappy");
+    assert!(is_happy(7), "7 reported unhappy");
+    assert!(!is_happy(2), "2 reported happy");
 }
