@@ -6,6 +6,7 @@ mod paren;
 mod unique_array;
 mod rem_element;
 mod happy;
+mod find_string;
 
 use happy::is_happy;
 
@@ -38,10 +39,16 @@ fn main() {
     println!("Vector: {:?}", vec3);
     let k: i32 = rem_element::remove_element(&mut vec3, 2);
     println!("k = {k}");
-    // assert!(k == 5, "Failed to report number of elements after deletion");
+    assert!(k == 5, "Failed to report number of elements after deletion");
     println!("Processed to {:?}", vec3);
 
     assert!(is_happy(19), "19 reported unhappy");
     assert!(is_happy(7), "7 reported unhappy");
     assert!(!is_happy(2), "2 reported happy");
+
+    let sad_index: i32 = find_string::find(
+        String::from("butsad"),
+        String::from("sad")
+    );
+    assert!(sad_index == 3, "Did not index sad correctly");
 }
