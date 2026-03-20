@@ -7,8 +7,10 @@ mod unique_array;
 mod rem_element;
 mod happy;
 mod find_string;
+mod insert_pos;
 
 use happy::is_happy;
+use insert_pos::search_insert;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -51,4 +53,11 @@ fn main() {
         String::from("sad")
     );
     assert!(sad_index == 3, "Did not index sad correctly");
+
+    let index: i32 = search_insert(vec![ 1, 3, 5, 6 ], 5);
+    assert!(index == 2, "1. Wrong insertion index for 5 (got {index} != 2)");
+    let index: i32 = search_insert(vec![ 1, 3, 5, 6 ], 2);
+    assert!(index == 1, "2. Wrong insertion index for 2 (got {index} != 1)");
+    let index: i32 = search_insert(vec![ 1 ], 2);
+    assert!(index == 1, "3. Wrong insertion index for 2 (got {index} != 1)");
 }
