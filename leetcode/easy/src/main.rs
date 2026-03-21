@@ -8,9 +8,11 @@ mod rem_element;
 mod happy;
 mod find_string;
 mod insert_pos;
+mod last_length;
 
 use happy::is_happy;
 use insert_pos::search_insert;
+use last_length::last_word_length;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -60,4 +62,14 @@ fn main() {
     assert!(index == 1, "2. Wrong insertion index for 2 (got {index} != 1)");
     let index: i32 = search_insert(vec![ 1 ], 2);
     assert!(index == 1, "3. Wrong insertion index for 2 (got {index} != 1)");
+
+    let s: String = String::from("Hello World");
+    let n: i32 = last_word_length(s);
+    assert!(n == 5, "World's length reported as {n}");
+    let s: String = String::from("    fly me to the moon  ");
+    let n: i32 = last_word_length(s);
+    assert!(n == 4, "World's length reported as {n}");
+    let s: String = String::from("     ");
+    let n: i32 = last_word_length(s);
+    assert!(n == 0, "World's length reported as {n}");
 }
