@@ -9,6 +9,7 @@ mod happy;
 mod find_string;
 mod insert_pos;
 mod last_length;
+mod plus_one;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -72,4 +73,8 @@ fn main() {
     let s: String = String::from("     ");
     let n: i32 = last_word_length(s);
     assert!(n == 0, "World's length reported as {n}");
+
+    assert_eq!(plus_one::add(vec![ 9, 9, 9 ]), vec![ 1, 0, 0, 0 ], "1. Sum not equal");
+    assert_eq!(plus_one::add(vec![ 9, 9, 8 ]), vec![ 9, 9, 9 ], "1. Sum not equal");
+    assert_eq!(plus_one::add(vec![ ]), vec![ ], "1. Sum not equal");
 }
