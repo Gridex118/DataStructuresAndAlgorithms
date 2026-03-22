@@ -10,6 +10,7 @@ mod find_string;
 mod insert_pos;
 mod last_length;
 mod plus_one;
+mod add_binary;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -77,4 +78,9 @@ fn main() {
     assert_eq!(plus_one::add(vec![ 9, 9, 9 ]), vec![ 1, 0, 0, 0 ], "1. Sum not equal");
     assert_eq!(plus_one::add(vec![ 9, 9, 8 ]), vec![ 9, 9, 9 ], "1. Sum not equal");
     assert_eq!(plus_one::add(vec![ ]), vec![ ], "1. Sum not equal");
+
+    let a: String = String::from("111");
+    let b: String = String::from("1");
+    let c: String = add_binary::sum(a, b);
+    assert_eq!(c, "1000");
 }
