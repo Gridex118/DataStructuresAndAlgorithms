@@ -12,6 +12,7 @@ mod last_length;
 mod plus_one;
 mod add_binary;
 mod sqrt;
+mod merge_sorted;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -90,4 +91,8 @@ fn main() {
     assert_eq!(sqrt(8), 2, "Reported: sqrt(8) = {}", sqrt(8));
     assert_eq!(sqrt(0), 0, "Reported: sqrt(0) = {}", sqrt(0));
     assert_eq!(sqrt(3), 1, "Reported: sqrt(3) = {}", sqrt(3));
+
+    let mut nums1: Vec<i32> = vec![0];
+    merge_sorted::merge(&mut nums1, 0, &mut [1], 1);
+    println!("{:?}", nums1);
 }
