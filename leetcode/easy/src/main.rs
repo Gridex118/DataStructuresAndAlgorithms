@@ -11,10 +11,12 @@ mod insert_pos;
 mod last_length;
 mod plus_one;
 mod add_binary;
+mod sqrt;
 
 use happy::is_happy;
 use insert_pos::search_insert;
 use last_length::last_word_length;
+use sqrt::sqrt;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -83,4 +85,9 @@ fn main() {
     let b: String = String::from("1");
     let c: String = add_binary::sum(a, b);
     assert_eq!(c, "1000");
+
+    assert_eq!(sqrt(2147395599), 46339, "Reported: sqrt(2147395599) = {}", sqrt(2147395599));
+    assert_eq!(sqrt(8), 2, "Reported: sqrt(8) = {}", sqrt(8));
+    assert_eq!(sqrt(0), 0, "Reported: sqrt(0) = {}", sqrt(0));
+    assert_eq!(sqrt(3), 1, "Reported: sqrt(3) = {}", sqrt(3));
 }
