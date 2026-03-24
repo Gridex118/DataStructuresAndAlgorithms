@@ -13,11 +13,13 @@ mod plus_one;
 mod add_binary;
 mod sqrt;
 mod merge_sorted;
+mod valid_palindrome;
 
 use happy::is_happy;
 use insert_pos::search_insert;
 use last_length::last_word_length;
 use sqrt::sqrt;
+use valid_palindrome::is_palindrome;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -95,4 +97,11 @@ fn main() {
     let mut nums1: Vec<i32> = vec![0];
     merge_sorted::merge(&mut nums1, 0, &mut [1], 1);
     println!("{:?}", nums1);
+
+    assert!(is_palindrome(String::from("A man, a plan, a canal: Panama")),
+            "Reported 'a man...' is not a palindrome");
+    assert!(!is_palindrome(String::from("race a car")),
+            "Reported 'race...' is a palindrome");
+    assert!(is_palindrome(String::from(" ")),
+            "Reported empty string is not a palindrome");
 }
