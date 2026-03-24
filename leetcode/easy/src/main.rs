@@ -14,12 +14,14 @@ mod add_binary;
 mod sqrt;
 mod merge_sorted;
 mod valid_palindrome;
+mod single_number;
 
 use happy::is_happy;
 use insert_pos::search_insert;
 use last_length::last_word_length;
 use sqrt::sqrt;
 use valid_palindrome::is_palindrome;
+use single_number::single_number;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -104,4 +106,11 @@ fn main() {
             "Reported 'race...' is a palindrome");
     assert!(is_palindrome(String::from(" ")),
             "Reported empty string is not a palindrome");
+
+    let vec: Vec<i32> = vec![ 2, 2, 1 ];
+    let ans: i32 = single_number(vec);
+    assert_eq!(ans, 1, "Reported {ans} instead of 1");
+    let vec: Vec<i32> = vec![ 4, 1, 2, 1, 2 ];
+    let ans: i32 = single_number(vec);
+    assert_eq!(ans, 4, "Reported {ans} instead of 4");
 }
