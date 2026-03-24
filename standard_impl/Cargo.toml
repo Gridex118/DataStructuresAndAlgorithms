@@ -2,6 +2,6 @@
 name = "standard_impl"
 version = "0.1.0"
 edition = "2024"
-author = "Alex Rosegrid"
+authors = [ "Alex Rosegrid" ]
 
 [dependencies]
