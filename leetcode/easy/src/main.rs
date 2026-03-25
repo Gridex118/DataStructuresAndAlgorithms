@@ -15,6 +15,7 @@ mod sqrt;
 mod merge_sorted;
 mod valid_palindrome;
 mod single_number;
+mod excel;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -113,4 +114,12 @@ fn main() {
     let vec: Vec<i32> = vec![ 4, 1, 2, 1, 2 ];
     let ans: i32 = single_number(vec);
     assert_eq!(ans, 4, "Reported {ans} instead of 4");
+
+    for (col, expected_title) in [
+        (1, "A"), (28, "AB"), (52, "AZ"),
+        (701, "ZY"), (703, "AAA"),
+    ] {
+        let title: String = excel::convert_to_title(col);
+        assert_eq!(title, expected_title, "Reported '{title}' for column {col}");
+    }
 }
