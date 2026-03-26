@@ -121,5 +121,7 @@ fn main() {
     ] {
         let title: String = excel::convert_to_title(col);
         assert_eq!(title, expected_title, "Reported '{title}' for column {col}");
+        let result_col: i32 = excel::title_to_col(String::from(expected_title));
+        assert_eq!(result_col, col, "Reported '{result_col}' for title {expected_title}");
     }
 }

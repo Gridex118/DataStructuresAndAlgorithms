@@ -12,3 +12,8 @@ pub fn convert_to_title(mut column_number: i32) -> String {
     }
     title.chars().rev().collect()
 }
+
+pub fn title_to_col(column_title: String) -> i32 {
+    column_title.as_bytes().iter()
+        .fold(0, |acc, c| acc * 26 + (c - b'A' + 1) as i32)
+}
