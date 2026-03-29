@@ -16,6 +16,8 @@ mod merge_sorted;
 mod valid_palindrome;
 mod single_number;
 mod excel;
+mod bit_manip;
+mod summary_ranges;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -23,6 +25,8 @@ use last_length::last_word_length;
 use sqrt::sqrt;
 use valid_palindrome::is_palindrome;
 use single_number::single_number;
+use bit_manip::*;
+use summary_ranges::summary_ranges;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -124,4 +128,22 @@ fn main() {
         let result_col: i32 = excel::title_to_col(String::from(expected_title));
         assert_eq!(result_col, col, "Reported '{result_col}' for title {expected_title}");
     }
+
+    for (original, reversed) in [
+        (43261596, 964176192), (2147483644, 1073741822)
+    ] {
+        let result = reverse_bits(original);
+        assert_eq!(result, reversed, "Reverse of {original}, reported as {result}");
+    }
+
+    for (n, count) in [        
+    ] {
+        let result = hamming_weight(n);
+        assert_eq!(result, count, "Count for {n} reported as {result}");
+    }
+
+    assert_eq!(summary_ranges(vec![0, 2, 3, 4, 6, 8, 9]),
+               vec!["0", "2->4", "6", "8->9"]);
+    assert_eq!(summary_ranges(vec![] as Vec<i32>), vec![] as Vec<String>);
+    assert_eq!(summary_ranges(vec![0]), vec!["0"]);
 }
