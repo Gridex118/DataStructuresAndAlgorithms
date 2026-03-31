@@ -18,6 +18,7 @@ mod single_number;
 mod excel;
 mod bit_manip;
 mod summary_ranges;
+mod numbers;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -27,6 +28,7 @@ use valid_palindrome::is_palindrome;
 use single_number::single_number;
 use bit_manip::*;
 use summary_ranges::summary_ranges;
+use numbers::*;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -146,4 +148,18 @@ fn main() {
                vec!["0", "2->4", "6", "8->9"]);
     assert_eq!(summary_ranges(vec![] as Vec<i32>), vec![] as Vec<String>);
     assert_eq!(summary_ranges(vec![0]), vec!["0"]);
+
+    for (num, root) in [
+        (38, 2), (42, 6), (1, 1), (0, 0)
+    ] {
+        let result = add_digits(num);
+        assert_eq!(result, root, "add_digits({num}) gave {result}");
+    }
+    for (num, ugliness) in [
+        (0, false), (-1, false), (1, true),
+        (35, false), (6, true)
+    ] {
+        let result = is_ugly(num);
+        assert_eq!(result, ugliness, "is_ugly({num}) gave {result}");
+    }
 }
