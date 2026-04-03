@@ -199,4 +199,6 @@ fn main() {
         let result = find_numbers(nums);
         assert_eq!(result, count);
     }
+
+    assert_eq!(maximum_wealth(vec![vec![1, 2, 3], vec![0, 1]]), 6);
 }
