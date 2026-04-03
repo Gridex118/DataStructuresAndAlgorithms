@@ -19,6 +19,8 @@ mod excel;
 mod bit_manip;
 mod summary_ranges;
 mod numbers;
+mod move_zeros;
+mod contains_duplicate;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -29,6 +31,8 @@ use single_number::single_number;
 use bit_manip::*;
 use summary_ranges::summary_ranges;
 use numbers::*;
+use move_zeros::move_zeros;
+use contains_duplicate::contains_duplicate;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -161,5 +165,38 @@ fn main() {
     ] {
         let result = is_ugly(num);
         assert_eq!(result, ugliness, "is_ugly({num}) gave {result}");
+    }
+    for (mut nums, sorted) in [
+        (vec![1], vec![1]),
+        (vec![0, 1, 0, 3, 12], vec![1, 3, 12, 0, 0]),
+        (vec![0, 2, 3, 0, 0, 4, 5, 7, 7], vec![2, 3, 4, 5, 7, 7, 0, 0, 0])
+    ] {
+        move_zeros(&mut nums);
+        assert_eq!(nums, sorted);
+    }
+
+    for (nums, missing) in [
+        (vec![3, 0, 1], 2),
+        (vec![0, 1], 2),
+        (vec![9, 6, 4, 2, 3, 5, 7, 0, 1], 8),
+    ] {
+        let result = missing_number(&nums);
+        assert_eq!(result, missing, "Reported {result} as missing in {:?}", nums);
+    }
+
+    for (nums, truth) in [
+        (vec![1, 2, 3, 1], true),
+        (vec![1, 2, 3, 4], false),
+    ] {
+        let result = contains_duplicate(nums);
+        assert_eq!(result, truth);
+    }
+
+    for (nums, count) in [
+        (vec![12, 345, 2, 6, 7896], 2),
+        (vec![555, 901, 482, 1771], 1),
+    ] {
+        let result = find_numbers(nums);
+        assert_eq!(result, count);
     }
 }
