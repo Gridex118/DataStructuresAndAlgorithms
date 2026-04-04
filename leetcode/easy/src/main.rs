@@ -21,6 +21,9 @@ mod summary_ranges;
 mod numbers;
 mod move_zeros;
 mod contains_duplicate;
+mod anagram;
+mod word_pattern;
+mod isomorphism;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -33,6 +36,9 @@ use summary_ranges::summary_ranges;
 use numbers::*;
 use move_zeros::move_zeros;
 use contains_duplicate::contains_duplicate;
+use anagram::is_anagram;
+use word_pattern::word_pattern;
+use isomorphism::are_isomorphic;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -201,4 +207,29 @@ fn main() {
     }
 
     assert_eq!(maximum_wealth(vec![vec![1, 2, 3], vec![0, 1]]), 6);
+
+    for (s, t, truth) in [
+        (String::from("anagram"), String::from("nagaram"), true),
+        (String::from("rat"), String::from("cat"), false),
+    ] {
+        assert_eq!(is_anagram(s, t), truth);
+    }
+
+    for (pattern, s, truth) in [
+        ("abba", "dog cat cat dog", true),
+        ("aba", "cat frog pig", false),
+        ("aba", "dog cat cat dog", false),
+        ("abba", "dog dog dog dog", false),
+    ] {
+        assert_eq!(word_pattern(String::from(pattern), String::from(s)), truth, "{pattern}:{s}");
+    }
+    for (s, t, truth) in [
+        ("egg", "add", true),
+        ("f11", "b23", false),
+        ("paper", "title", true),
+        ("xyz", "1234", false),
+        ("badc", "baba", false),
+    ] {
+        assert_eq!(are_isomorphic(String::from(s), String::from(t)), truth, "{s}:{t}");
+    }
 }
