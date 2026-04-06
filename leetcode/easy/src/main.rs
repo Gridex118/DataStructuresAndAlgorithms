@@ -35,7 +35,7 @@ use bit_manip::*;
 use summary_ranges::summary_ranges;
 use numbers::*;
 use move_zeros::move_zeros;
-use contains_duplicate::contains_duplicate;
+use contains_duplicate::*;
 use anagram::is_anagram;
 use word_pattern::word_pattern;
 use isomorphism::are_isomorphic;
@@ -232,4 +232,17 @@ fn main() {
     ] {
         assert_eq!(are_isomorphic(String::from(s), String::from(t)), truth, "{s}:{t}");
     }
+
+    for (nums, k, truth) in [
+        (vec![1, 2, 3, 1], 3, true),
+        (vec![1, 0, 1, 1], 1, true),
+        (vec![1, 2, 3, 1, 2, 3], 2, false),
+    ] {
+        assert_eq!(contains_nearby_duplicate(nums.to_vec(), k), truth, "{:?}", nums);
+    }
+
+    let powers_in_range = (0..244)
+        .filter(|&x| is_power_of_three(x))
+        .collect::<Vec<i32>>();
+    assert_eq!(powers_in_range, vec![1, 3, 9, 27, 81, 243]);
 }

@@ -50,3 +50,7 @@ pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
         .map(|v| v.iter().sum())
         .max().unwrap()
 }
+
+pub fn is_power_of_three(n: i32) -> bool {
+    n >= 1 && (1162261467 % n == 0)
+}
