@@ -24,6 +24,8 @@ mod contains_duplicate;
 mod anagram;
 mod word_pattern;
 mod isomorphism;
+mod reverse_string;
+mod arrays;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -39,6 +41,7 @@ use contains_duplicate::*;
 use anagram::is_anagram;
 use word_pattern::word_pattern;
 use isomorphism::are_isomorphic;
+use reverse_string::reverse_vowels;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -245,4 +248,22 @@ fn main() {
         .filter(|&x| is_power_of_three(x))
         .collect::<Vec<i32>>();
     assert_eq!(powers_in_range, vec![1, 3, 9, 27, 81, 243]);
+
+    for (s, expect) in [
+        ("leetcode", "leotcede"),
+        ("IceCreAm", "AceCreIm"),
+    ] {
+        assert_eq!(reverse_vowels(s.to_string()), expect.to_string());
+    }
+
+    for (nums1, nums2, mut intersection) in [
+        (vec![1, 2, 2, 1], vec![2, 2], vec![2]),
+        (vec![4, 9, 5], vec![9, 4, 9, 8, 4], vec![9, 4]),
+        (vec![4, 9, 5], vec![1, 2, 3], vec![]),
+    ] {
+        let mut result = arrays::intersection(nums1.to_vec(), nums2.to_vec());
+        result.sort();
+        intersection.sort();
+        assert_eq!(result, intersection, "{:?}, {:?}", nums1, nums2);
+    }
 }
