@@ -266,4 +266,15 @@ fn main() {
         intersection.sort();
         assert_eq!(result, intersection, "{:?}, {:?}", nums1, nums2);
     }
+
+    for (nums1, nums2, mut intersection) in [
+        (vec![1, 2, 2, 1], vec![2, 2], vec![2, 2]),
+        (vec![4, 9, 5], vec![9, 4, 9, 8, 4], vec![9, 4]),
+        (vec![4, 9, 5], vec![1, 2, 3], vec![]),
+    ] {
+        let mut result = arrays::intersection_no_uniq(nums1.to_vec(), nums2.to_vec());
+        result.sort();
+        intersection.sort();
+        assert_eq!(result, intersection, "{:?}, {:?}", nums1, nums2);
+    }
 }
