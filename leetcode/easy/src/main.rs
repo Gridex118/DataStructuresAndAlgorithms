@@ -27,6 +27,7 @@ mod isomorphism;
 mod reverse_string;
 mod arrays;
 mod ransomnote;
+mod strings;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -43,6 +44,7 @@ use anagram::is_anagram;
 use word_pattern::word_pattern;
 use isomorphism::are_isomorphic;
 use reverse_string::reverse_vowels;
+use strings::*;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -298,5 +300,13 @@ fn main() {
         assert_eq!(ransomnote::can_construct(ransom_note.to_string(),
                                              magazine.to_string()),
                    truth, "{ransom_note}, {magazine}");
+    }
+
+    for (s, uniq) in [
+        ("leetcode", 0),
+        ("loveleetcode", 2),
+        ("aabb", -1),
+    ] {
+        assert_eq!(first_uniq_chars(s.to_string()), uniq, "{s}");
     }
 }
