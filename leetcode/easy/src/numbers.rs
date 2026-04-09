@@ -54,3 +54,21 @@ pub fn maximum_wealth(accounts: Vec<Vec<i32>>) -> i32 {
 pub fn is_power_of_three(n: i32) -> bool {
     n >= 1 && (1162261467 % n == 0)
 }
+
+pub fn is_perfect_square(num: i32) -> bool {
+    let num = num as u64;
+    let mut start = 0;
+    let mut end = num;
+    while start <= end {
+        let mid = start + (end - start) / 2;
+        let mid_sq = mid * mid;
+        if mid_sq == num {
+            return true;
+        } else if mid_sq < num {
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    false
+}

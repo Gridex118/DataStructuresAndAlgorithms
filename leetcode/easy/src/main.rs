@@ -277,4 +277,15 @@ fn main() {
         intersection.sort();
         assert_eq!(result, intersection, "{:?}, {:?}", nums1, nums2);
     }
+
+    for (num, expected) in [
+        (16, true), (9, true),
+        (0, true), (1, true),
+        (8, false), (7, false),
+        (2, false), (3, false),
+        (808201, true)
+    ] {
+        let result = is_perfect_square(num);
+        assert_eq!(result, expected, "{num}");
+    }
 }
