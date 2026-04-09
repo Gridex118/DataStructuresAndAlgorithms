@@ -26,6 +26,7 @@ mod word_pattern;
 mod isomorphism;
 mod reverse_string;
 mod arrays;
+mod ransomnote;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -287,5 +288,15 @@ fn main() {
     ] {
         let result = is_perfect_square(num);
         assert_eq!(result, expected, "{num}");
+    }
+
+    for (ransom_note, magazine, truth) in [
+        ("a", "b", false),
+        ("aa", "ab", false),
+        ("aa", "aab", true)
+    ] {
+        assert_eq!(ransomnote::can_construct(ransom_note.to_string(),
+                                             magazine.to_string()),
+                   truth, "{ransom_note}, {magazine}");
     }
 }
