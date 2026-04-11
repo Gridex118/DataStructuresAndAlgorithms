@@ -26,3 +26,20 @@ pub fn intersection_no_uniq(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
     }
     intersection
 }
+
+pub fn third_max(nums: Vec<i32>) -> i32 {
+    let (mut x, mut y, mut z) = (None, None, None);
+    for num in nums {
+        if [x, y, z].contains(&Some(num)) {
+            continue;
+        }
+        if x.is_none() || num > x.unwrap() {
+            (z, y, x) = (y, x, Some(num));
+        } else if y.is_none() || num > y.unwrap() {
+            (z, y) = (y, Some(num));
+        } else if z.is_none() || num > z.unwrap() {
+            z = Some(num);
+        }
+    }
+    z.unwrap_or(x.unwrap())
+}

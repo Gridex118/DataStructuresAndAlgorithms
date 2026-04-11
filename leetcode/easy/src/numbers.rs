@@ -72,3 +72,19 @@ pub fn is_perfect_square(num: i32) -> bool {
     }
     false
 }
+
+pub fn to_hex(num: i32) -> String {
+    if num == 0 { return "0".to_string(); }
+    let mut num = num as u32;
+    let mut hex = String::new();
+    while num > 0 {
+        let rem = (num % 16) as u8;
+        hex.push(if rem < 10 {
+            (b'0' + rem) as char
+        } else {
+            (b'a' + rem - 10) as char
+        });
+        num /= 16;
+    }
+    hex.chars().rev().collect()
+}

@@ -12,3 +12,9 @@ pub fn first_uniq_chars(s: String) -> i32 {
     }
     -1
 }
+
+pub fn find_the_difference(s: String, t: String) -> char {
+    s.bytes().chain(t.bytes())
+        .reduce(|acc, next| acc ^ next).unwrap()
+        as char
+}

@@ -309,4 +309,22 @@ fn main() {
     ] {
         assert_eq!(first_uniq_chars(s.to_string()), uniq, "{s}");
     }
+
+    for (num, hex) in [
+        (0, "0"), (3, "3"),
+        (11, "b"), (26, "1a"),
+        (-1, "ffffffff"),
+        (189, "bd"), (1893, "765")
+    ] {
+        assert_eq!(to_hex(num), hex.to_string(), "{num}");
+    }
+
+    for (nums, expected) in [
+        (vec![1, 2], 2), (vec![1], 1),
+        (vec![3, 2, 1], 1),
+        (vec![2, 2, 3, 1], 1),
+        (vec![1, 2, -2147483648], -2147483648)
+    ] {
+        assert_eq!(arrays::third_max(nums.to_vec()), expected, "{:?}", nums);
+    }
 }
