@@ -9,7 +9,10 @@ mod tests {
         let mut vec: Vec<i32> = vec![];
         bubble_sort(&mut vec);
         assert_eq!(vec, vec![],
-                   "Somehow failed to sort an empty array");
+                   "Somehow failed to sort an empty array - bubble");
+        selection_sort(&mut vec);
+        assert_eq!(vec, vec![],
+                   "Somehow failed to sort an empty array - selection");
     }
 
     #[test]
@@ -21,16 +24,23 @@ mod tests {
             let mut vec = vec_base.to_vec();
             bubble_sort(&mut vec);
             assert_eq!(vec, vec_base,
-                       "Somehow a sorted array was altered");
+                       "Somehow a sorted array was altered - bubble");
+            selection_sort(&mut vec);
+            assert_eq!(vec, vec_base,
+                       "Somehow a sorted array was altered - selection");
         }
     }
 
     #[test]
     fn successfully_sorts_unsorted_array() {
         let mut vec = vec![ 10, 13, 6, 1, 50, 23, 19, 45, 50 ];
+        let mut vec_copy = vec.to_vec();
         bubble_sort(&mut vec);
         assert_eq!(vec, vec![ 1, 6, 10, 13, 19, 23, 45, 50, 50 ],
-                   "Failed to sort array");
+                   "Failed to sort array -- bubble");
+        selection_sort(&mut vec_copy);
+        assert_eq!(vec_copy, vec![ 1, 6, 10, 13, 19, 23, 45, 50, 50 ],
+                   "Failed to sort array -- selection");
     }
 
 }
