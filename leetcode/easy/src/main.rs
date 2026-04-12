@@ -327,4 +327,9 @@ fn main() {
     ] {
         assert_eq!(arrays::third_max(nums.to_vec()), expected, "{:?}", nums);
     }
+
+    assert_eq!(count_segments("hello, how do you do".to_string()), 5);
+    assert_eq!(count_segments("hello".to_string()), 1);
+    assert_eq!(count_segments("".to_string()), 0);
+    assert_eq!(count_segments("            ".to_string()), 0);
 }

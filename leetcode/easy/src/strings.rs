@@ -13,8 +13,20 @@ pub fn first_uniq_chars(s: String) -> i32 {
     -1
 }
 
-pub fn find_the_difference(s: String, t: String) -> char {
+pub fn _find_the_difference(s: String, t: String) -> char {
     s.bytes().chain(t.bytes())
         .reduce(|acc, next| acc ^ next).unwrap()
         as char
+}
+
+pub fn count_segments(s: String) -> i32 {
+    let mut count = 0;
+    let s: Vec<char> = s.chars().collect();
+    let n = s.len();
+    for i in 0..n {
+        if s[i] != ' ' && (i == 0 || s[i - 1] == ' ') {
+            count += 1;
+        }
+    }
+    count
 }
