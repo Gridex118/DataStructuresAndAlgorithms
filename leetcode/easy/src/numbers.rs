@@ -106,3 +106,20 @@ pub fn arrange_coins(n: i32) -> i32 {
     }
     (start - 1) as i32
 }
+
+pub fn find_dissapeared_numbers(mut nums: Vec<i32>) -> Vec<i32> {
+    let n = nums.len();
+    for i in 0..n {
+        let j = (nums[i].abs() - 1) as usize;
+        if nums[j] > 0 {
+            nums[j] = -nums[j];
+        }
+    }
+    let mut ans = Vec::new();
+    for (i, &x) in nums.iter().enumerate() {
+        if x > 0 {
+            ans.push(i as i32 + 1);
+        }
+    }
+    ans
+}

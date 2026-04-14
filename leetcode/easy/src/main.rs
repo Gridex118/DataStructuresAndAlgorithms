@@ -340,4 +340,12 @@ fn main() {
     ] {
         assert_eq!(arrange_coins(n), expected_rows, "{n}");
     }
+
+    for (nums, excluded) in [
+        (vec![4, 3, 2, 7, 8, 2, 3, 1], vec![5, 6]),
+        (vec![1, 1], vec![2]),
+    ] {
+        let result = find_dissapeared_numbers(nums.to_vec());
+        assert_eq!(result, excluded.to_vec(), "Game {:?} for {:?}", result, nums);
+    }
 }
