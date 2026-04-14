@@ -332,4 +332,12 @@ fn main() {
     assert_eq!(count_segments("hello".to_string()), 1);
     assert_eq!(count_segments("".to_string()), 0);
     assert_eq!(count_segments("            ".to_string()), 0);
+
+    for (n, expected_rows) in [
+        (5, 2), (8, 3), (1, 1),
+        (6, 3), (7, 3), (10, 4),
+        (11, 4), (14, 4), (15, 5),
+    ] {
+        assert_eq!(arrange_coins(n), expected_rows, "{n}");
+    }
 }

@@ -88,3 +88,21 @@ pub fn to_hex(num: i32) -> String {
     }
     hex.chars().rev().collect()
 }
+
+pub fn arrange_coins(n: i32) -> i32 {
+    let n = n as i64;
+    let mut start = 1;
+    let mut end = n;
+    while start <= end {
+        let mid = start + (end - start) / 2;
+        let summation = (mid * (mid + 1)) / 2;
+        if summation == n {
+            return mid as i32;
+        } else if summation < n {
+            start = mid + 1;
+        } else {
+            end = mid - 1;
+        }
+    }
+    (start - 1) as i32
+}
