@@ -51,3 +51,19 @@ pub fn create_target_array(nums: Vec<i32>, index: Vec<i32>) -> Vec<i32> {
     }
     answer
 }
+
+pub fn matrix_reshape(mat: Vec<Vec<i32>>, r: i32, c: i32) -> Vec<Vec<i32>> {
+    let (m, n) = (mat.len(), mat[0].len());
+    let (r, c) = (r as usize, c as usize);
+    if m * n != r * c {
+        mat
+    } else {
+        let mut result: Vec<Vec<i32>> = vec![vec![0; c]; r];
+        // Matrix 1D index = total_cols * i_row + i_col;
+        // i_row = 1D index / total_cols; i_col = 1D index % total_cols
+        for i in 0..(r * c) {
+            result[i / c][i % c] = mat[i / n][i % n];
+        }
+        result
+    }
+}

@@ -377,4 +377,12 @@ fn main() {
         assert_eq!(arrays::create_target_array(nums.to_vec(), index),
                    expected, "{:?}", nums);
     }
+
+    for (mat, r, c, expected) in [
+        (vec![vec![1, 2], vec![3, 4]], 1, 4, vec![vec![1, 2, 3, 4]]),
+        (vec![vec![1, 2], vec![3, 4]], 2, 4, vec![vec![1, 2], vec![3, 4]]),
+    ] {
+        assert_eq!(arrays::matrix_reshape(mat.to_vec(), r, c),
+                   expected.to_vec(), "{mat:?}")
+    }
 }
