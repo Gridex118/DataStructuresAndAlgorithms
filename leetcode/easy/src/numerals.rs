@@ -31,3 +31,13 @@ pub fn roman_to_int(roman: &str) -> i32 {
     }
     result
 }
+
+pub fn hamming_distance(mut x: i32, mut y: i32) -> i32 {
+    let mut distance = 0;
+    while x > 0 || y > 0 {
+        distance += (x ^ y) & 0b1;
+        x >>= 1;
+        y >>= 1;
+    }
+    distance
+}

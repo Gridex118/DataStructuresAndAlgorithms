@@ -15,3 +15,8 @@ pub fn hamming_weight(mut n: i32) -> i32 {
     }
     count
 }
+
+pub fn find_complement(num: i32) -> i32 {
+    let i_msb = if num == 0 { 1 } else { num.ilog2() + 1 };
+    num ^ ((0b1u32 << i_msb) - 1) as i32
+}

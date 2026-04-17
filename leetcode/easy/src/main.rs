@@ -348,4 +348,25 @@ fn main() {
         let result = find_dissapeared_numbers(nums.to_vec());
         assert_eq!(result, excluded.to_vec(), "Game {:?} for {:?}", result, nums);
     }
+
+    for (s, truth) in [
+        ("abab", true), ("aba", false),
+        ("abcabcabc", true), ("abcabcab", false),
+    ] {
+        assert_eq!(repeated_substring_pattern(s.to_string()), truth, "{s}");
+    }
+
+    for (x, y, distance) in [
+        (1, 4, 2), (3, 1, 1), (0, 0, 0), (5, 5, 0),
+        (0, 1, 1), (1, 0, 1),
+    ] {
+        assert_eq!(numerals::hamming_distance(x, y), distance, "{x}, {y}");
+    }
+
+    for (num, expected) in [
+        (5, 2), (1, 0), (2, 1), (0, 1),
+        (3, 0), (4, 3),
+    ] {
+        assert_eq!(find_complement(num), expected, "{num}");
+    }
 }

@@ -30,3 +30,22 @@ pub fn count_segments(s: String) -> i32 {
     }
     count
 }
+
+pub fn repeated_substring_pattern(s: String) -> bool {
+    let n = s.len();
+    let mut i = n / 2;
+    while i > 0 {
+        if n.is_multiple_of(i) {
+            let mut tmp = String::new();
+            let sub_string = &s[0..i];
+            for _ in 0..(n / i) {
+                tmp.push_str(sub_string);
+            }
+            if tmp == s {
+                return true;
+            }
+        }
+        i -= 1;
+    }
+    false
+}
