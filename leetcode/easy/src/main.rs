@@ -369,4 +369,12 @@ fn main() {
     ] {
         assert_eq!(find_complement(num), expected, "{num}");
     }
+
+    for (nums, index, expected) in [
+        (vec![0, 1, 2, 3, 4], vec![0, 1, 2, 2, 1], vec![0, 4, 1, 3, 2]),
+        (vec![1, 2, 3, 4, 0], vec![0, 1, 2, 3, 0], vec![0, 1, 2, 3, 4]),
+    ] {
+        assert_eq!(arrays::create_target_array(nums.to_vec(), index),
+                   expected, "{:?}", nums);
+    }
 }

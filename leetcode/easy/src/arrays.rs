@@ -43,3 +43,11 @@ pub fn third_max(nums: Vec<i32>) -> i32 {
     }
     z.unwrap_or(x.unwrap())
 }
+
+pub fn create_target_array(nums: Vec<i32>, index: Vec<i32>) -> Vec<i32> {
+    let mut answer = Vec::new();
+    for (i, &x) in nums.iter().enumerate() {
+        answer.insert(index[i] as usize, x);
+    }
+    answer
+}
