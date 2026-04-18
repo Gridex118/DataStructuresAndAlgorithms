@@ -402,4 +402,13 @@ fn main() {
     ] {
         assert_eq!(largest_altitude(gain.to_vec()), expected, "{gain:?}");
     }
+
+    for (image, expected) in [
+        (vec![vec![1, 1, 0], vec![1, 0, 1], vec![0, 0, 0]],
+         vec![vec![1, 0, 0], vec![0, 1, 0], vec![1, 1, 1]]),
+        (vec![vec![1, 1, 0, 0], vec![1, 0, 0, 1], vec![0, 1, 1, 1], vec![1, 0, 1, 0]],
+         vec![vec![1, 1, 0, 0], vec![0, 1, 1, 0], vec![0, 0, 0, 1], vec![1, 0, 1, 0]]),
+    ] {
+        assert_eq!(flip_and_invert_image(image.to_vec()), expected, "{image:?}");
+    }
 }

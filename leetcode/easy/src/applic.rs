@@ -7,3 +7,11 @@ pub fn largest_altitude(gains: Vec<i32>) -> i32 {
     }
     max
 }
+
+pub fn flip_and_invert_image(image: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+    image.into_iter()
+        .map(|v| v.into_iter().rev()
+             .map(|x| x ^ 1)
+             .collect())
+        .collect()
+}
