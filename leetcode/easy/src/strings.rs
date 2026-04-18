@@ -49,3 +49,21 @@ pub fn repeated_substring_pattern(s: String) -> bool {
     }
     false
 }
+
+pub fn licence_key_formatting(s: String, k: i32) -> String {
+    let unformatted: String = s.chars()
+        .filter(|&c| c != '-')
+        .collect();
+    let n = unformatted.len() as i32;
+    let mut i = 0;
+    let mut formatted = String::new();
+    for c in unformatted.chars().rev() {
+        formatted.push(c.to_ascii_uppercase());
+        i += 1;
+        if (i % k == 0) && (i != n) {
+            formatted.push('-');
+        }
+    }
+    formatted.chars().rev()
+        .collect()
+}

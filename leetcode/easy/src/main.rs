@@ -28,6 +28,7 @@ mod reverse_string;
 mod arrays;
 mod ransomnote;
 mod strings;
+mod applic;
 
 use happy::is_happy;
 use insert_pos::search_insert;
@@ -45,6 +46,7 @@ use word_pattern::word_pattern;
 use isomorphism::are_isomorphic;
 use reverse_string::reverse_vowels;
 use strings::*;
+use applic::*;
 
 fn main() {
     let vec1: Vec<i32> = vec![ 3, 3 ];
@@ -384,5 +386,20 @@ fn main() {
     ] {
         assert_eq!(arrays::matrix_reshape(mat.to_vec(), r, c),
                    expected.to_vec(), "{mat:?}")
+    }
+
+    for (s, k, expected) in [
+        ("5F3Z-2e-9-w", 4, "5F3Z-2E9W"),
+        ("2-5g-3-J", 2, "2-5G-3J"),
+        ("a", 1, "A"), ("A", 5, "A"),
+    ] {
+        assert_eq!(licence_key_formatting(s.to_string(), k), expected.to_string(), "{s}");
+    }
+
+    for (gain, expected) in [
+        (vec![-5, 1, 5, 0, -7], 1),
+        (vec![-4, -3, -2, -1, 4, 3, 2], 0),
+    ] {
+        assert_eq!(largest_altitude(gain.to_vec()), expected, "{gain:?}");
     }
 }
