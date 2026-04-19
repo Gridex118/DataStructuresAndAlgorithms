@@ -67,3 +67,15 @@ pub fn matrix_reshape(mat: Vec<Vec<i32>>, r: i32, c: i32) -> Vec<Vec<i32>> {
         result
     }
 }
+
+pub fn _count_matches(items: Vec<Vec<String>>, rule_key: String, rule_value: String) -> i32 {
+    let i_key = match rule_key.as_str() {
+        "type"  => 0,
+        "color" => 1,
+        "name"  => 2,
+        &_ => panic!("Invalid rule key")
+    };
+    items.iter()
+        .filter(|v| v[i_key] == rule_value)
+        .count() as i32
+}
