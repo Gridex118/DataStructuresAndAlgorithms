@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 
 pub fn first_uniq_chars(s: String) -> i32 {
     let mut map: HashMap<char, i32> = HashMap::new();
@@ -66,4 +66,12 @@ pub fn licence_key_formatting(s: String, k: i32) -> String {
     }
     formatted.chars().rev()
         .collect()
+}
+
+fn _check_if_pangram(sentence: String) -> bool {
+    let mut used = [false; 26];
+    for b in sentence.bytes() {
+        used[(b - b'a') as usize] = true;
+    }
+    used.iter().all(|&b| b)
 }

@@ -411,4 +411,12 @@ fn main() {
     ] {
         assert_eq!(flip_and_invert_image(image.to_vec()), expected, "{image:?}");
     }
+
+    for (nums, expected) in [
+        (vec![8, 1, 2, 2, 3], vec![4, 0, 1, 1, 3]),
+        (vec![6, 5 , 4, 8], vec![2, 1, 0, 3]),
+        (vec![7, 7, 7], vec![0, 0, 0]),
+    ] {
+        assert_eq!(arrays::smaller_number_than_current(nums.to_vec()), expected, "{nums:?}");
+    }
 }

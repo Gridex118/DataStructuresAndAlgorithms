@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 pub fn intersection(nums1: Vec<i32>, nums2: Vec<i32>) -> Vec<i32> {
     let nums1: HashSet<i32> = HashSet::from_iter(nums1);
@@ -78,4 +78,27 @@ pub fn _count_matches(items: Vec<Vec<String>>, rule_key: String, rule_value: Str
     items.iter()
         .filter(|v| v[i_key] == rule_value)
         .count() as i32
+}
+
+pub fn smaller_number_than_current(nums: Vec<i32>) -> Vec<i32> {
+    nums.iter()
+        .map(|x| nums.iter().fold(0, |acc, next| {
+            if next < x {
+                acc + 1
+            } else {
+                acc
+            }
+        }))
+        .collect()
+}
+
+pub fn num_identical_pairs(nums: Vec<i32>) -> i32 {
+    let mut map: HashMap<i32, Vec<i32>> = HashMap::new();
+    for (i, &x) in nums.iter().enumerate() {
+        map.entry(x).or_default().push(i as i32);
+    };
+    map.values().fold(0, |acc, v| {
+        let n = v.len() as i32;
+        acc + (n * (n - 1)) / 2
+    })
 }
