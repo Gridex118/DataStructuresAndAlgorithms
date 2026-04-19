@@ -419,4 +419,19 @@ fn main() {
     ] {
         assert_eq!(arrays::smaller_number_than_current(nums.to_vec()), expected, "{nums:?}");
     }
+
+    for (letters, target, expected) in [
+        (vec!['c', 'f', 'j'], 'a', 'c'),
+        (vec!['c', 'f', 'j'], 'c', 'f'),
+        (vec!['x', 'x', 'y', 'y'], 'z', 'x'),
+    ] {
+        assert_eq!(arrays::next_greatest_letter(letters.to_vec(), target), expected, "{letters:?}:{target}");
+    }
+
+    for (m, n, indices, expected) in [
+        (2, 3, vec![vec![0, 1], vec![1, 1]], 6),
+        (2, 2, vec![vec![1, 1], vec![0, 0]], 0),
+    ] {
+        assert_eq!(odd_cells(m, n, indices.to_vec()), expected, "{indices:?}");
+    }
 }
