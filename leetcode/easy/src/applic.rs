@@ -60,3 +60,16 @@ fn _transpose_matrix(mat: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
     }
     transpose
 }
+
+pub fn add_to_array_form(mut num: Vec<i32>, mut k: i32) -> Vec<i32> {
+    let mut sum = Vec::new();
+    let mut carry = 0;
+    while !num.is_empty() || carry == 1 || k > 0 {
+        let this_digit = num.pop().unwrap_or(0) + k % 10 + carry;
+        sum.push(this_digit % 10);
+        carry = this_digit / 10;
+        k /= 10;
+    }
+    sum.reverse();
+    sum
+}

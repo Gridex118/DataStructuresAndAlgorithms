@@ -92,7 +92,7 @@ pub fn smaller_number_than_current(nums: Vec<i32>) -> Vec<i32> {
         .collect()
 }
 
-pub fn num_identical_pairs(nums: Vec<i32>) -> i32 {
+pub fn _num_identical_pairs(nums: Vec<i32>) -> i32 {
     let mut map: HashMap<i32, Vec<i32>> = HashMap::new();
     for (i, &x) in nums.iter().enumerate() {
         map.entry(x).or_default().push(i as i32);
@@ -119,4 +119,14 @@ pub fn next_greatest_letter(letters: Vec<char>, target: char) -> char {
     } else {
         letters[0]
     }
+}
+
+pub fn shuffle(nums: Vec<i32>, n: i32) -> Vec<i32> {
+    let n = n as usize;
+    let mut result = Vec::with_capacity(2 * n);
+    for i in 0..n {
+        result.push(nums[i]);
+        result.push(nums[i + n]);
+    }
+    result
 }
