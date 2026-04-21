@@ -28,3 +28,35 @@ pub fn odd_cells(m: i32, n: i32, indices: Vec<Vec<i32>>) -> i32 {
     let (odd_rows, odd_cols) = (m - even_rows, n - even_cols);
     even_rows * odd_cols + odd_rows * even_cols
 }
+
+fn _kids_with_candies(candies: Vec<i32>, extra_candies: i32) -> Vec<bool> {
+    let max_candies = *candies.iter().max()
+        .unwrap();
+    candies.iter()
+        .map(|c| c + extra_candies >= max_candies)
+        .collect()
+}
+
+fn _diagnol_sum_matrix(mat: Vec<Vec<i32>>) -> i32 {
+    let mut sum = 0;
+    let n = mat.len();
+    for i in 0..n {
+        sum += mat[i][i] + mat[i][n - i - 1];
+    }
+    if !n.is_multiple_of(2) {
+        sum -= mat[n / 2][n / 2];
+    }
+    sum
+}
+
+fn _transpose_matrix(mat: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+    let m = mat.len();
+    let n = mat[0].len();
+    let mut transpose = vec![vec![0; m]; n];
+    for row in 0..n {
+        for col in 0..m {
+            transpose[row][col] = mat[col][row];
+        }
+    }
+    transpose
+}
