@@ -73,3 +73,41 @@ pub fn add_to_array_form(mut num: Vec<i32>, mut k: i32) -> Vec<i32> {
     sum.reverse();
     sum
 }
+
+pub fn _maximum_population(logs: Vec<Vec<i32>>) -> i32 {
+    let mut populations = [0; 101];
+    for log in logs {
+        populations[log[0] as usize - 1950] += 1;
+        populations[log[1] as usize - 1950] -= 1;
+    }
+    let mut current = 0;
+    let mut max_population = 0;
+    let mut i_max_population = 0;
+    for (i, population) in populations.iter().enumerate() {
+        current += population;
+        if max_population < current {
+            max_population = current;
+            i_max_population = i;
+        }
+    }
+    i_max_population as i32 + 1950
+}
+
+fn _lucky_numbers(matrix: Vec<Vec<i32>>) -> Vec<i32> {
+    let n = matrix[0].len();
+    let mut col_maxs = vec![i32::MIN; n];
+    for row in &matrix {
+        for (j, &val) in row.iter().enumerate() {
+            col_maxs[j] = col_maxs[j].max(val);
+        }
+    }
+    let mut luckies = Vec::new();
+    for row in &matrix {
+        let (col, &val) = row.iter().enumerate()
+            .min_by_key(|&(_, x)| x).unwrap();
+        if col_maxs[col] == val {
+            luckies.push(val);
+        }
+    }
+    luckies
+}

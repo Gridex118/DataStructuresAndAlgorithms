@@ -130,3 +130,33 @@ pub fn shuffle(nums: Vec<i32>, n: i32) -> Vec<i32> {
     }
     result
 }
+
+fn sr_binary_search(nums: &[i32], target: i32, first: bool) -> Option<i32> {
+    let mut left = 0;
+    let mut right = nums.len().checked_sub(1)?;
+    let mut i = -1;
+    while left <= right {
+        let mid = left + (right - left) / 2;
+        if nums[mid] == target {
+            i = mid as i32;
+            if first {
+                if mid == 0 {
+                    break;
+                }
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        } else if nums[mid] > target {
+            right = mid.checked_sub(1)?;
+        } else {
+            left = mid + 1;
+        }
+    }
+    Some(i)
+}
+
+pub fn search_range(nums: Vec<i32>, target: i32) -> Vec<i32> {
+    vec![sr_binary_search(&nums, target, true).unwrap_or(-1),
+         sr_binary_search(&nums, target, false).unwrap_or(-1)]
+}

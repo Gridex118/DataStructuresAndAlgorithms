@@ -452,4 +452,13 @@ fn main() {
     ] {
         assert_eq!(add_to_array_form(num.to_vec(), k), expected, "{num:?}");
     }
+
+    for (nums, target, expected) in [
+        (vec![5, 7, 7, 8, 8, 10], 8, vec![3, 4]),
+        (vec![5, 7, 7, 8, 8, 10], 6, vec![-1, -1]),
+        (vec![], 0, vec![-1, -1]),
+        (vec![1], 1, vec![0, 0]),
+    ] {
+        assert_eq!(arrays::search_range(nums.to_vec(), target), expected, "{nums:?}");
+    }
 }
