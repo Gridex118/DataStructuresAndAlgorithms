@@ -111,3 +111,31 @@ fn _lucky_numbers(matrix: Vec<Vec<i32>>) -> Vec<i32> {
     }
     luckies
 }
+
+pub struct SolutionMatrixRotation {}
+impl SolutionMatrixRotation {
+    fn stage_transform(i: usize, j: usize, n: usize, stage: u8) -> (usize, usize) {
+        match stage {
+            0 => (i, j),
+            1 => (j, n - 1 - i),
+            2 => (n - 1 - i, n - 1 - j),
+            3 => (n - 1 - j, i),
+            _ => unreachable!()
+        }
+    }
+    fn are_equal(mat: &[Vec<i32>], target: &[Vec<i32>], stage: u8) -> bool {
+        let n = mat.len();
+        for (i, row) in mat.iter().enumerate() {
+            for (j, cell) in row.iter().enumerate() {
+                let (i_target, j_target) = Self::stage_transform(i, j, n, stage);
+                if *cell != target[i_target][j_target] {
+                    return false;
+                }
+            }
+        }
+        true
+    }
+    pub fn find_rotation(mat: Vec<Vec<i32>>, target: Vec<Vec<i32>>) -> bool {
+        (0..4).any(|stage| Self::are_equal(&mat, &target, stage))
+    }
+}

@@ -461,4 +461,11 @@ fn main() {
     ] {
         assert_eq!(arrays::search_range(nums.to_vec(), target), expected, "{nums:?}");
     }
+
+    for (mat, target, truth) in [
+        (vec![vec![0, 1], vec![1, 0]], vec![vec![1, 0], vec![0, 1]], true),
+        (vec![vec![0, 1], vec![1, 1]], vec![vec![1, 0], vec![0, 1]], false),
+    ] {
+        assert_eq!(SolutionMatrixRotation::find_rotation(mat.to_vec(), target), truth, "{mat:?}");
+    }
 }
