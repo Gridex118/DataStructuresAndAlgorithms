@@ -170,3 +170,50 @@ pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
     }
     result
 }
+
+struct MountainArray;
+impl MountainArray {
+    fn get(&self, _index: i32) -> i32 { todo!() }
+    fn length(&self) -> i32 { todo!() }
+}
+
+struct SolutionMountainArrayFind;
+impl SolutionMountainArrayFind {
+    fn _find_in_mountain_array(target: i32, mountain_array: &MountainArray) -> i32 {
+        let n = mountain_array.length();
+        let i_peak = Self::find_peak(mountain_array, n);
+        let i_target_left_subarray = Self::binary_search(mountain_array, target, 0, i_peak, 1);
+        if i_target_left_subarray != -1 {
+            i_target_left_subarray
+        } else {
+            Self::binary_search(mountain_array, target, i_peak + 1, n - 1, -1)
+        }
+    }
+    fn binary_search(array: &MountainArray, target: i32, mut start: i32, mut end: i32, direction: i32) -> i32 {
+        while start <= end {
+            let mid = start + (end - start) / 2;
+            let mid_element = array.get(mid);
+            if mid_element == target {
+                return mid;
+            } else if (direction * mid_element) > (direction * target) {
+                end = mid - 1;
+            } else if (direction * mid_element) < (direction * target) {
+                start = mid + 1;
+            }
+        }
+        -1
+    }
+    fn find_peak(mountain_array: &MountainArray, n: i32) -> i32 {
+        let mut left = 0;
+        let mut right = n - 1;
+        while left < right {
+            let mid = left + (right - left) / 2;
+            if mountain_array.get(mid) < mountain_array.get(mid + 1) {
+                left = mid + 1;
+            } else {
+                right = mid;
+            }
+        }
+        left
+    }
+}
