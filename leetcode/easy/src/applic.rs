@@ -139,3 +139,34 @@ impl SolutionMatrixRotation {
         (0..4).any(|stage| Self::are_equal(&mat, &target, stage))
     }
 }
+
+pub fn max_product(nums: Vec<i32>) -> i32 {
+    let mut max = nums[0];
+    let mut min = nums[0];
+    let mut result = nums[0];
+    for &x in nums.iter().skip(1) {
+        if x < 0 {
+            std::mem::swap(&mut min, &mut max);
+        }
+        max = x.max(max * x);
+        min = x.min(min * x);
+        result = result.max(max);
+    }
+    result
+}
+
+pub fn product_except_self(nums: Vec<i32>) -> Vec<i32> {
+    let n = nums.len();
+    let mut result = vec![1; n];
+    let mut left = 1;
+    for i in 0..n {
+        result[i] *= left;
+        left *= nums[i];
+    }
+    let mut right = 1;
+    for i in (0..n).rev() {
+        result[i] *= right;
+        right *= nums[i];
+    }
+    result
+}

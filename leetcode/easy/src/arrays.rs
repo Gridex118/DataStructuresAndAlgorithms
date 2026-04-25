@@ -160,3 +160,29 @@ pub fn search_range(nums: Vec<i32>, target: i32) -> Vec<i32> {
     vec![sr_binary_search(&nums, target, true).unwrap_or(-1),
          sr_binary_search(&nums, target, false).unwrap_or(-1)]
 }
+
+fn _peak_index_in_mountain_array(arr: Vec<i32>) -> i32 {
+    let mut left = 0;
+    let mut right = arr.len() - 1;
+    while left < right {
+        let mid = left + (right - left) / 2;
+        if arr[mid] < arr[mid + 1] {
+            left = mid + 1;
+        } else {
+            right = mid;
+        }
+    }
+    left as i32
+}
+
+fn _majority_element(nums: Vec<i32>) -> i32 {
+    let mut count = 0;
+    let mut answer = nums[0];
+    for &num in nums.iter() {
+        if count == 0 {
+            answer = num;
+        }
+        count += if num == answer { 1 } else { -1 };
+    }
+    answer
+}

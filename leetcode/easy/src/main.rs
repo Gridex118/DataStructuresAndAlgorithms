@@ -468,4 +468,15 @@ fn main() {
     ] {
         assert_eq!(SolutionMatrixRotation::find_rotation(mat.to_vec(), target), truth, "{mat:?}");
     }
+
+    for (nums, expected) in [
+        (vec![2, 3, -2, 4], 6),
+        (vec![-2, 0, -1], 0),
+        (vec![-2, 3], 3),
+        (vec![-2, 3, -4, -9], 108),
+    ] {
+        assert_eq!(max_product(nums.to_vec()), expected, "{nums:?}");
+    }
+
+    product_except_self(vec![1, 2, 3, 4]);
 }
