@@ -479,4 +479,18 @@ fn main() {
     }
 
     product_except_self(vec![1, 2, 3, 4]);
+
+    for (list1, list2, mut list3) in [
+        (vec!["happy".to_string(), "sad".to_string(), "good".to_string()],
+         vec!["sad".to_string(), "happy".to_string(), "good".to_string()],
+         vec!["sad".to_string(), "happy".to_string()]),
+        (vec!["vacag".to_string(), "KFC".to_string()],
+         vec!["fvo".to_string(), "xrljq".to_string(), "KFC".to_string()],
+         vec!["KFC".to_string()]),
+    ] {
+        list3.sort();
+        let mut calculated = find_restaurant(list1, list2);
+        calculated.sort();
+        assert_eq!(calculated, list3);
+    }
 }

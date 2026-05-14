@@ -75,3 +75,62 @@ fn _check_if_pangram(sentence: String) -> bool {
     }
     used.iter().all(|&b| b)
 }
+
+fn _find_words(words: Vec<String>) -> Vec<String> {
+    let row_sets: [HashSet<char>; 3] = [
+        HashSet::from_iter("qwertyuiop".chars()),
+        HashSet::from_iter("asdfghjkl".chars()),
+        HashSet::from_iter("zxcvbnm".chars())
+    ];
+    words.into_iter()
+        .filter(|word| {
+            let set = HashSet::from_iter(word.to_ascii_lowercase().chars());
+            row_sets.iter().any(|row_set| row_set.is_superset(&set))
+        })
+        .collect()
+}
+
+fn _base7(num: i32) -> String {
+    match num {
+        0 => "0".to_string(),
+        _ => {
+            let mut converted = String::new();
+            let negate = num < 0;
+            let mut num = num.abs();
+            while num > 0 {
+                converted.push((b'0' + (num % 7) as u8) as char);
+                num /= 7;
+            }
+            if negate { converted.push('-'); }
+            converted.chars().rev()
+                .collect() 
+        }
+    }
+}
+
+pub fn find_restaurant(list1: Vec<String>, list2: Vec<String>) -> Vec<String> {
+    let m = list1.len();
+    let n = list2.len();
+    let list_ref = if m <= n { &list1 } else { &list2 };
+    let other_list_ref = if m <= n { &list2 } else { &list1 };
+    let mut other_list_set = HashMap::with_capacity(other_list_ref.len());
+    for (i, string) in other_list_ref.iter().enumerate() {
+        other_list_set.insert(string, i);
+    }
+    let mut index_sums = vec![m + n; list_ref.len()];
+    let mut min_index_sum = m + n;
+    for (i, string) in list_ref.iter().enumerate() {
+        if let Some(j) = other_list_set.get(string) {
+            let index_sum = i + j;
+            index_sums[i] = index_sum;
+            min_index_sum = min_index_sum.min(index_sum);
+        }
+    }
+    let mut answer = Vec::with_capacity(list_ref.len());
+    for (i, &sum) in index_sums.iter().enumerate() {
+        if sum == min_index_sum {
+            answer.push(list_ref[i].to_string());
+        }
+    }
+    answer
+}
