@@ -186,3 +186,18 @@ fn _majority_element(nums: Vec<i32>) -> i32 {
     }
     answer
 }
+
+pub fn find_lhs(nums: Vec<i32>) -> i32 {
+    let mut counts = HashMap::new();
+    for x in nums {
+        *counts.entry(x).or_insert(0) += 1;
+    }
+    let mut max_length = 0;
+    for (x, count) in &counts {
+        let next = x + 1;
+        if let Some(count_next) = counts.get(&next) {
+            max_length = max_length.max(count + count_next);
+        }
+    }
+    max_length
+}
