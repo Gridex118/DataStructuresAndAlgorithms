@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::{collections::{HashMap, HashSet}, default};
 
 pub fn first_uniq_chars(s: String) -> i32 {
     let mut map: HashMap<char, i32> = HashMap::new();
@@ -133,4 +133,14 @@ pub fn find_restaurant(list1: Vec<String>, list2: Vec<String>) -> Vec<String> {
         }
     }
     answer
+}
+
+pub fn reverse_string_2(s: String, k: i32) -> String {
+    let mut chars = s.chars().collect::<Vec<char>>();
+    let n = chars.len();
+    for i in (0..n).step_by(2 * k as usize) {
+        let j = (i + k as usize).min(n);
+        chars[i..j].reverse();
+    }
+    chars.iter().collect()
 }

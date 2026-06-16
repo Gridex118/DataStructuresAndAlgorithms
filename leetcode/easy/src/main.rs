@@ -501,4 +501,14 @@ fn main() {
     ] {
         assert_eq!(arrays::find_lhs(nums.to_vec()), expected);
     }
+
+    for (s, k, expected) in [
+        ("abcdefg", 2, "bacdfeg"),
+        ("abcd", 2, "bacd"),
+        ("a", 3, "a"),
+        ("abcdefghijkl", 3, "cbadefihgjkl"),
+    ] {
+        assert_eq!(reverse_string_2(s.to_string(), k), expected.to_string(),
+                   "Failed for: {s}, {k}");
+    }
 }
