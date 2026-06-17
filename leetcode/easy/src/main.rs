@@ -511,4 +511,14 @@ fn main() {
         assert_eq!(reverse_string_2(s.to_string(), k), expected.to_string(),
                    "Failed for: {s}, {k}");
     }
+
+    for (matrix, expected) in [
+        (vec![vec![1, 2, 3], vec![4, 5, 6], vec![7, 8, 9]],
+         vec![1,2, 3, 6, 9, 8, 7, 4, 5]),
+        (vec![vec![1, 2, 3, 4], vec![5, 6, 7, 8], vec![9, 10, 11, 12]],
+         vec![1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]),
+        (vec![vec![1], vec![2], vec![3]], vec![1, 2, 3]),
+    ] {
+        assert_eq!(arrays::spiral_order(matrix.to_vec()), expected, "{:?}", matrix);
+    }
 }

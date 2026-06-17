@@ -1,4 +1,4 @@
-use std::{collections::{HashMap, HashSet}, default};
+use std::collections::{HashMap, HashSet};
 
 pub fn first_uniq_chars(s: String) -> i32 {
     let mut map: HashMap<char, i32> = HashMap::new();

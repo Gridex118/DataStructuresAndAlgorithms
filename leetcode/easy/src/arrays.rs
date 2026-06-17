@@ -201,3 +201,27 @@ pub fn find_lhs(nums: Vec<i32>) -> i32 {
     }
     max_length
 }
+
+pub fn spiral_order(matrix: Vec<Vec<i32>>) -> Vec<i32> {
+    let m = matrix.len() as i32;
+    assert!(!matrix.is_empty());
+    let n = matrix[0].len() as i32;
+    let mut result = Vec::new();
+    // Start at (0, 0) with a velocity of (1, 0) till the right border
+    // You make a 90° turn if the next cell is already visited, or if coordinates go out of bounds
+    let (mut x, mut y) = (0, 0);
+    let (mut dx, mut dy) = (1, 0);
+    let mut visited = vec![false; (m * n) as usize];
+    for _ in 0..(m * n) {
+        result.push(matrix[y as usize][x as usize]);
+        visited[(y * n + x) as usize] = true;
+        let (nx, ny) = (x + dx, y + dy);
+        let next_out_of_bounds = nx < 0 || nx >= n || ny < 0 || ny >= m;
+        if next_out_of_bounds || visited[(ny * n + nx) as usize] {
+            (dx, dy) = (-dy, dx);
+        }
+        x += dx;
+        y += dy;
+    }
+    result
+}
