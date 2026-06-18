@@ -225,3 +225,52 @@ pub fn spiral_order(matrix: Vec<Vec<i32>>) -> Vec<i32> {
     }
     result
 }
+
+pub fn spiral_matrix_generate_n2(n: i32) -> Vec<Vec<i32>> {
+    let n_square = n * n;
+    let mut result = vec![
+        vec![0; n as usize];
+        n as usize
+    ];
+    let (mut x, mut y) = (0, 0);
+    let (mut dx, mut dy) = (1, 0);
+    let mut visited = vec![false; n_square as usize];
+    for num in 1..=n_square {
+        result[y as usize][x as usize] = num;
+        visited[(y * n + x) as usize] = true;
+        let (nx, ny) = (x + dx, y + dy);
+        let next_out_of_bounds = nx < 0 || nx >= n || ny < 0 || ny >= n;
+        if next_out_of_bounds || visited[(ny * n + nx) as usize] {
+            (dx, dy) = (-dy, dx);
+        }
+        x += dx;
+        y += dy;
+    }
+    result
+}
+
+pub fn spiral_increasing_order(rows: i32, cols: i32, r_start: i32, c_start: i32) -> Vec<Vec<i32>> {
+    let total_elements = (rows * cols) as usize;
+    let mut result = Vec::with_capacity(total_elements);
+    let (mut x, mut y) = (c_start, r_start);
+    let mut radius = 1;
+    let (mut dx, mut dy) = (1, 0);
+    // We have a spiral of increasing radius
+    // The radius starts at 1 and is incremented every 2 turns
+    // Make a 90° turn after every `radius` elements
+    while result.len() < total_elements {
+        for _ in 0..2 {
+            for _ in 0..radius {
+                if (x >= 0 && x < cols)
+                    && (y >= 0 && y < rows) {
+                        result.push(vec![y, x]);
+                    }
+                x += dx;
+                y += dy;
+            }
+            (dx, dy) = (-dy, dx);
+        }
+        radius += 1;
+    }
+    result
+}

@@ -521,4 +521,26 @@ fn main() {
     ] {
         assert_eq!(arrays::spiral_order(matrix.to_vec()), expected, "{:?}", matrix);
     }
+    
+    for (n, expected) in [
+        (3,
+         vec![vec![1, 2, 3], vec![8, 9, 4], vec![7, 6, 5]]),
+        (1,
+         vec![vec![1]]),
+    ] {
+        assert_eq!(arrays::spiral_matrix_generate_n2(n), expected, "{:?}", n);
+    }
+
+    for (rows, cols, r_start, c_start, expected) in [
+        (1, 4, 0, 0,
+         vec![vec![0, 0], vec![0, 1], vec![0, 2], vec![0, 3]]),
+        (4, 4, 1, 2,
+         vec![vec![1, 2], vec![1, 3], vec![2, 3], vec![2, 2], vec![2, 1],
+              vec![1, 1], vec![0, 1], vec![0, 2], vec![0, 3], vec![3, 3],
+              vec![3, 2], vec![3, 1], vec![3, 0], vec![2, 0], vec![1, 0],
+              vec![0, 0]]),
+    ] {
+        assert_eq!(arrays::spiral_increasing_order(rows, cols, r_start, c_start), expected,
+                   "{rows}x{cols} : ({r_start}, {c_start})");
+    }
 }
