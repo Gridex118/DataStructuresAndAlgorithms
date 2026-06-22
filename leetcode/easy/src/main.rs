@@ -543,4 +543,13 @@ fn main() {
         assert_eq!(arrays::spiral_increasing_order(rows, cols, r_start, c_start), expected,
                    "{rows}x{cols} : ({r_start}, {c_start})");
     }
+
+    for (nums, truth) in [
+        (vec![2, 3, 1, 1, 4], true),
+        (vec![3, 2, 1, 0, 4], false),
+        (vec![3, 3, 1, 0, 4], true),
+        (vec![1, 2, 3, 1, 2, 0, 1], true),
+    ] {
+        assert_eq!(arrays::can_jump(nums.to_vec()), truth, "{nums:?}");
+    }
 }

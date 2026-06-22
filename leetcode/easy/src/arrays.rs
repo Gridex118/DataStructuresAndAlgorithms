@@ -274,3 +274,18 @@ pub fn spiral_increasing_order(rows: i32, cols: i32, r_start: i32, c_start: i32)
     }
     result
 }
+
+pub fn can_jump(nums: Vec<i32>) -> bool {
+    let n = nums.len();
+    assert!(n != 0);
+    let mut i = n - 1;
+    let mut next_hop = n - 1;
+    loop {
+        if i + nums[i] as usize >= next_hop {
+            next_hop = i;
+        }
+        if i == 0 { break; }
+        i -= 1;
+    }
+    next_hop == 0
+}
