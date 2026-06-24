@@ -289,3 +289,21 @@ pub fn can_jump(nums: Vec<i32>) -> bool {
     }
     next_hop == 0
 }
+
+pub fn generate_pascal(n: i32) -> Vec<Vec<i32>> {
+    if n == 1 {
+        vec![vec![1]]
+    } else {
+        let n = n as usize;
+        let mut rows = Vec::with_capacity(n);
+        rows.push(vec![1]);
+        for i in 1..n {
+            let mut row = vec![1; i + 1]; // The first and last elements in each rows will be 1
+            for j in 1..i {
+                row[j] = rows[i - 1][j] + rows[i - 1][j - 1];
+            }
+            rows.push(row);
+        }
+        rows
+    }
+}

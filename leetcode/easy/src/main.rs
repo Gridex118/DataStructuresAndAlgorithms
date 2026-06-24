@@ -552,4 +552,11 @@ fn main() {
     ] {
         assert_eq!(arrays::can_jump(nums.to_vec()), truth, "{nums:?}");
     }
+
+    for (num_rows, expected_vec) in [
+        (5, vec![vec![1], vec![1, 1], vec![1, 2, 1], vec![1, 3, 3, 1], vec![1, 4, 6, 4, 1]]),
+        (1, vec![vec![1]]),
+    ] {
+        assert_eq!(arrays::generate_pascal(num_rows), expected_vec, "Failed for {num_rows}");
+    }
 }
