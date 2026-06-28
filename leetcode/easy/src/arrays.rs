@@ -307,3 +307,17 @@ pub fn generate_pascal(n: i32) -> Vec<Vec<i32>> {
         rows
     }
 }
+
+pub fn max_profit(prices: Vec<i32>) -> i32 {
+    let mut min_price = prices[0];
+    let mut max_profit = 0;
+    for x in prices {
+        if x < min_price {
+            min_price = x;
+        } else if x > min_price {
+            max_profit = max_profit
+                .max(x - min_price);
+        }
+    }
+    max_profit
+}

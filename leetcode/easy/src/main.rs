@@ -559,4 +559,12 @@ fn main() {
     ] {
         assert_eq!(arrays::generate_pascal(num_rows), expected_vec, "Failed for {num_rows}");
     }
+
+    for (prices, profit) in [
+        (vec![7, 1, 5, 3, 6, 4], 5),
+        (vec![7, 6, 4, 3, 1], 0),
+        (vec![7], 0)
+    ] {
+        assert_eq!(arrays::max_profit(prices.to_vec()), profit, "Failed for {prices:?}");
+    }
 }
