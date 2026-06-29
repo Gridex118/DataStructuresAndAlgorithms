@@ -144,3 +144,25 @@ pub fn reverse_string_2(s: String, k: i32) -> String {
     }
     chars.iter().collect()
 }
+
+pub fn is_subsequence(s: String, t: String) -> bool {
+    let s = s.as_bytes();
+    let t = t.as_bytes();
+    let mut q = 0;
+    let m = t.len();
+    for &c in s {
+        let mut found = false;
+        while q < m {
+            if t[q] == c {
+                found = true;
+                break;
+            }
+            q += 1;
+        }
+        if !found {
+            return false;
+        }
+        q += 1;
+    }
+    true
+}

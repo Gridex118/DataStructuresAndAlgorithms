@@ -567,4 +567,14 @@ fn main() {
     ] {
         assert_eq!(arrays::max_profit(prices.to_vec()), profit, "Failed for {prices:?}");
     }
+
+    for (s, t, expected) in [
+        ("abc", "ahbgdc", true),
+        ("axc", "ahbgdc", false),
+        ("", "xyz", true),
+        ("xx", "xyz", false),
+    ] {
+        assert_eq!(is_subsequence(s.to_string(), t.to_string()), expected,
+                   "{s} ⊂ {t} failed");
+    }
 }
