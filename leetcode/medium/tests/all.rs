@@ -1,9 +1,6 @@
-use leetcode_medium::dynamic;
-use leetcode_medium::search;
-
 #[cfg(test)]
-mod tests {
-    use super::*;
+mod dynamic_tests {
+    use leetcode_medium::dynamic;
 
     #[test]
     fn house_robber_two() {
@@ -16,6 +13,11 @@ mod tests {
                        "Failed for {nums:?}");
         }
     }
+}
+
+#[cfg(test)]
+mod search_tests {
+    use leetcode_medium::search;
 
     #[test]
     fn two_sum_two_array_is_sorted() {
@@ -27,6 +29,22 @@ mod tests {
         ] {
             assert_eq!(expected, search::two_sum_sorted(numbers.to_vec(), target),
                        "Failed for {numbers:?} : {target}");
+        }
+    }
+
+    #[test]
+    fn can_find_missing_positive() {
+        for (nums, missing) in [
+            (vec![1, 2, 0], 3),
+            (vec![3, 4, -1, 1], 2),
+            (vec![7, 8, 9, 11, 12], 1),
+            (vec![1], 2), (vec![2], 1),
+            (vec![-2], 1),
+            (vec![2, -1], 1),
+            (vec![100000, 3, 4000, 2, 15, 1, 99999], 4),
+        ] {
+            assert_eq!(search::first_missing_positive(nums.to_vec()), missing,
+                       "Search failed for {nums:?}");
         }
     }
 }
