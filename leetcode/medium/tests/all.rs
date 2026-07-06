@@ -48,3 +48,20 @@ mod search_tests {
         }
     }
 }
+
+#[cfg(test)]
+mod general_array_tests {
+    use leetcode_medium::arrays;
+
+    #[test]
+    fn continuous_subarray_sum() {
+        for (nums, k, truth) in [
+            (vec![23, 2, 4, 6, 7], 6, true),
+            (vec![23, 2, 6, 4, 7], 6, true),
+            (vec![23, 2, 6, 4, 7], 13, false),
+        ] {
+            assert_eq!(arrays::check_good_subarray(nums.to_vec(), k), truth,
+                       "Wrong report for {nums:?} (k = {k})");
+        }
+    }
+}
