@@ -9,6 +9,17 @@ const _RIGHT_HALF_DIAMOND_9_ROWS: &str = "\
 * *
 *";
 
+const _FULL_DIAMOND_9_ROWS: &str = "\
+\x20   *\n\
+\x20  * *\n\
+\x20 * * *\n\
+\x20* * * *\n\
+   * * * * *\n\
+\x20* * * *\n\
+\x20 * * *\n\
+\x20  * *\n\
+\x20   *";
+
 /// - `n` is a positive odd number, defining the number of rows in the pattern
 pub fn pattern_right_half_diamond(n: usize) -> String {
     let row_peak = n / 2 + 1;
@@ -25,6 +36,36 @@ pub fn pattern_right_half_diamond(n: usize) -> String {
     })
 }
 
+/// - `n` is a positive odd number, defining the number of rows in the pattern
+pub fn pattern_full_diamond(n: usize) -> Option<String> {
+    if n % 2 == 0 {
+        return None
+    }
+    let row_peak = n / 2 + 1;
+    let mut pattern = String::new();
+    for row in 1..=n {
+        let col_max = if row <= row_peak {
+            row
+        } else {
+            n - row + 1
+        };
+        // Seek to correct position
+        for _ in 1..=(row_peak - col_max) {
+            pattern.push(' ');
+        }
+        for col in 1..=col_max {
+            pattern.push('*');
+            if col != col_max {
+                pattern.push(' ');
+            }
+        }
+        if row != n {
+            pattern.push('\n');
+        }
+    }
+    Some(pattern)
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -34,6 +75,14 @@ mod tests {
         assert_eq!(
             pattern_right_half_diamond(9),
             String::from(_RIGHT_HALF_DIAMOND_9_ROWS)
+        );
+    }
+
+    #[test]
+    fn test_full_diamond() {
+        assert_eq!(
+            pattern_full_diamond(9),
+            Some(String::from(_FULL_DIAMOND_9_ROWS))
         );
     }
 }
