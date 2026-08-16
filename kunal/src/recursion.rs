@@ -121,6 +121,107 @@ pub fn string_length(s: &str) -> usize {
     }
 }
 
+/// - G_1 = `a`, G_2 = `b`, G_3 = `c`
+/// - G_n = G_(n - 3) + G_(n - 2) + G_(n - 1)
+pub fn geekonacci(a: i64, b: i64, c: i64, n: i64) -> i64 {
+    if n == 1 {
+        a
+    } else if n == 2 {
+        b
+    } else if n == 3 {
+        c
+    } else {
+        geekonacci(a, b, c, n - 3)
+            + geekonacci(a, b, c, n - 2)
+            + geekonacci(a, b, c, n - 1)
+    }
+}
+
+/// Sort given array in ascending order
+pub fn bubble_sort(arr: &mut [i32], n: usize) {
+    if n < 2 { return; }
+    let mut swapped = false;
+    for i in 1..n {
+        if arr[i] < arr[i - 1] {
+            arr.swap(i, i - 1);
+            swapped = true;
+        }
+    }
+    if swapped { bubble_sort(arr, n - 1); }
+}
+
+/// Sort given array in ascending order
+pub fn insertion_sort(arr: &mut [i32], n: usize) {
+    if n < 2 { return; }
+    insertion_sort(arr, n - 1);
+    let key = arr[n - 1];
+    let mut j = n - 1;
+    while j > 0 && arr[j - 1] > key {
+        arr[j] = arr[j - 1];
+        j -= 1;
+    }
+    arr[j] = key;
+}
+
+/// Find the sum of digits in `n`
+pub fn sum_of_digits(num: u32) -> u32 {
+    if num / 10 == 0 {
+        num
+    } else {
+        (num % 10) + sum_of_digits(num / 10)
+    }
+}
+
+/// Find the product of `x` and `y`
+pub fn product(mut x: u32, mut y: u32) -> u32 {
+    // Add `x` to itself, `y` times
+    // `y` being the smaller number reduces the number of recursion calls
+    if x < y { std::mem::swap(&mut x, &mut y); }
+    if y == 0 {
+        0
+    } else {
+        x + product(x, y - 1)
+    }
+}
+
+/// Check if `n` is a prime number or not
+fn is_prime_go(n: u32, i: u32) -> bool {
+    if n < 2 {
+        false
+    } else if i >= n {
+        true
+    } else {
+        (n % i != 0) && is_prime_go(n, i + 1)
+    }
+}
+pub fn is_prime(n: u32) -> bool {
+    is_prime_go(n, 2)
+}
+
+/// Check if `arr` is sorted in ascending order or not
+pub fn is_sorted(arr: &[i32]) -> bool {
+    if arr.len() < 2 {
+        return true;
+    } else {
+        (arr[0] <= arr[1]) && is_sorted(&arr[1..])
+    }
+}
+
+/// Remove consecutive duplicate characters in string `s`
+pub fn remove_consecutive_duplicates(s: &str) -> String {
+    if s.len() < 2 {
+        String::from(s)
+    } else {
+        let n = s.len();
+        let mut result = remove_consecutive_duplicates(&s[..(n - 1)]);
+        let s = s.as_bytes();
+        if s[n - 1] != s[n - 2] {
+            result.push(s[n - 1] as char);
+        }
+        result
+    }
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -209,4 +310,89 @@ mod tests {
         assert_eq!(string_length("abcd"), 4);
         assert_eq!(string_length("GEEKSFORGEEKS"), 13);
     }
+
+    #[test]
+    fn test_geekonacci() {
+        assert_eq!(geekonacci(1, 3, 2, 4), 6);
+        assert_eq!(geekonacci(1, 3, 2, 6), 19);
+    }
+
+    #[test]
+    fn test_bubble_sort() {
+        let mut arr = vec![ 5, 1, 4, 2, 8, ];
+        assert!(!arr.is_sorted());
+        let n = arr.len();
+        bubble_sort(&mut arr, n);
+        assert!(arr.is_sorted());
+
+        let mut arr = vec![];
+        assert!(arr.is_sorted());
+        let n = arr.len();
+        bubble_sort(&mut arr, n);
+        assert!(arr.is_sorted());
+    }
+
+    #[test]
+    fn test_insertion_sort() {
+        let mut arr = vec![ 5, 1, 4, 2, 8, ];
+        assert!(!arr.is_sorted());
+        let n = arr.len();
+        insertion_sort(&mut arr, n);
+        assert!(arr.is_sorted());
+
+        let mut arr = vec![];
+        assert!(arr.is_sorted());
+        let n = arr.len();
+        insertion_sort(&mut arr, n);
+        assert!(arr.is_sorted());
+    }
+
+    #[test]
+    fn test_sum_of_digits() {
+        for (num, sum) in [
+            (12345, 15), (45632, 20),
+            (0, 0), (1, 1)
+        ] {
+            assert_eq!(sum_of_digits(num), sum, "Failed for {num}");
+        }
+    }
+
+    #[test]
+    fn test_product() {
+        for (x, y, z) in [
+            (5, 2, 10), (100, 5, 500),
+        ] {
+            assert_eq!(product(x, y), z, "Product of {x}, {y} failed");
+        }
+    }
+
+    #[test]
+    fn test_prime() {
+        assert!(!is_prime(1), "Failed for 1");
+        assert!(is_prime(2), "Failed for 2");
+        assert!(is_prime(11), "Failed for 11");
+        assert!(!is_prime(15), "Failed for 15");
+    }
+
+    #[test]
+    fn test_name() {
+        assert!(is_sorted(&[10, 20, 30, 40, 50]));
+        assert!(is_sorted(&[1]));
+        assert!(is_sorted(&[]));
+        assert!(!is_sorted(&[90, 80, 100, 70, 40, 30]));
+        assert!(!is_sorted(&[100, 20, 30, 40, 50]));
+    }
+
+    #[test]
+    fn test_remove_consecutive_duplicates() {
+        for (s, expected) in [
+            ("aaaaabbbbbb", String::from("ab")),
+            ("geeksforgeeks", String::from("geksforgeks")),
+        ] {
+            assert_eq!(remove_consecutive_duplicates(s), expected,
+                       "Failed for {s}");
+        }
+    }
+
+
 }
