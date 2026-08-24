@@ -184,7 +184,6 @@ pub fn product(mut x: u32, mut y: u32) -> u32 {
     }
 }
 
-/// Check if `n` is a prime number or not
 fn is_prime_go(n: u32, i: u32) -> bool {
     if n < 2 {
         false
@@ -194,6 +193,7 @@ fn is_prime_go(n: u32, i: u32) -> bool {
         (n % i != 0) && is_prime_go(n, i + 1)
     }
 }
+/// Check if `n` is a prime number or not
 pub fn is_prime(n: u32) -> bool {
     is_prime_go(n, 2)
 }
@@ -220,6 +220,69 @@ pub fn remove_consecutive_duplicates(s: &str) -> String {
         }
         result
     }
+}
+
+fn is_palindrome(s: &str) -> bool {
+    let s = s.as_bytes();
+    let n = s.len();
+    for i in 0..(n / 2) {
+        if s[i] != s[n - 1 - i] {
+            return false
+        }
+    }
+    true
+}
+type Partition = Vec<String>;
+fn palindromic_partitions_go(s: &[u8],
+                             index: usize,
+                             current: &mut Partition,
+                             result: &mut Vec<Partition>)
+{
+    let n = s.len();
+    if index == n {
+        result.push(current.clone());
+        return;
+    }
+    let mut substr = String::new();
+    for (i, &b) in s.iter().enumerate().skip(index) {
+        substr.push(b as char);
+        if is_palindrome(&substr) {
+            current.push(substr.clone());
+            palindromic_partitions_go(s, i + 1, current, result);
+            current.pop();
+        }
+    }
+}
+/// Returns a list of all palindromic partitions of a string
+/// Each partition contains exclusive substrings, that are each palindromes
+/// - `s` is assumed to contain only english alphabets
+pub fn palindromic_partitions(s: &str) -> Vec<Partition> {
+    let mut partitions = Vec::new();
+    palindromic_partitions_go(s.as_bytes(), 0, &mut Partition::new(), &mut partitions);
+    partitions
+}
+
+fn power_set_go(s: &[u8], index: usize, current: String, result: &mut Vec::<String>) {
+    let n = s.len();
+    if index == n {
+        if !current.is_empty() {
+            result.push(current.clone());
+        }
+        return;
+    }
+    // We eiter take s[index] or we don't
+    let mut with = String::from(&current);
+    with.push(s[index] as char);
+    power_set_go(s, index + 1, with, result);
+    power_set_go(s, index + 1, current, result);
+}
+/// Returns the power set of the string `s`, in lexicographic order
+/// - `s` is assumed to contain only english alphabets
+pub fn power_set(s: &str) -> Vec<String> {
+    let mut subsequences = Vec::new();
+    power_set_go(s.as_bytes(), 0, String::new(), &mut subsequences);
+    subsequences.sort();
+    subsequences
 }
 
 
@@ -394,5 +457,27 @@ mod tests {
         }
     }
 
+    #[test]
+    fn test_palindromic_partitions() {
+        for (s, expected_partitions) in [
+            ("geeks", vec![
+                vec![ "g", "e", "e", "k", "s" ],
+                vec![ "g", "ee", "k", "s" ]
+            ]),
+        ] {
+            assert_eq!(palindromic_partitions(s), expected_partitions,
+                       "Failed for {s}");
+        }
+    }
+
+    #[test]
+    fn test_power_set() {
+        for (s, expected) in [
+            ("abc", vec![ "a", "ab", "abc", "ac", "b", "bc", "c" ]),
+            ("", vec![]), ("a", vec!["a"]),
+        ] {
+            assert_eq!(power_set(s), expected, "Failed for {s}");
+        }
+    }
 
 }
