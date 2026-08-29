@@ -131,6 +131,46 @@ pub fn intersect_2(nums1: &mut [i32], nums2: &mut [i32]) -> Vec<i32> {
     answer
 }
 
+/// Return the 3rd distinct maximum number in `nums`
+/// - If it does not exist, return the maximum number instead
+pub fn third_maximum(nums: &[i32]) -> i32 {
+    let (mut x, mut y, mut z) = (None, None, None);
+    for &num in nums {
+        if [x, y, z].iter().any(|&x| x == Some(num)) {
+            continue;
+        }
+        if x.is_none() || num > x.unwrap() {
+            (x, y, z) = (Some(num), x, y);
+        } else if y.is_none() || num > y.unwrap() {
+            (x, y, z) = (x, Some(num), y);
+        } else if z.is_none() || num > z.unwrap() {
+            z = Some(num);
+        }
+    }
+    z.unwrap_or(x.unwrap())
+}
+
+/// Find the maximum number of content children
+/// - Each child `i` has a greed factor `g[i]`, which is the minimum size
+/// of a cookie that the child will be content with
+/// - Each cookie `j` has a size `s[j]`. If `s[j] >= g[i]`, we can
+/// assign the cookie `j` to the child `i`, and the child `i` will be content
+pub fn find_content_children(g: &mut [i32], s: &mut [i32]) -> i32 {
+    g.sort_unstable();
+    s.sort_unstable();
+    let (m, n) = (g.len(), s.len());
+    let (mut i, mut j) = (0, 0);
+    let mut answer = 0;
+    while i < m && j < n {
+        if g[i] <= s[j] {
+            answer += 1;
+            i += 1;
+        }
+        j += 1;
+    }
+    answer
+}
+
 
 #[cfg(test)]
 mod tests {
@@ -209,6 +249,28 @@ mod tests {
             let mut answer = intersect_2(&mut nums1, &mut nums2);
             answer.sort_unstable();
             assert_eq!(answer, expected, "Failed for {nums1:?}, {nums2:?}");
+        }
+    }
+
+    #[test]
+    fn test_third_maximum() {
+        for (nums, expected) in [
+            (vec![ 3, 2, 1 ], 1),
+            (vec![ 1, 2 ], 2),
+            (vec![ 2, 3, 2, 1 ], 1),
+        ] {
+            assert_eq!(third_maximum(&nums), expected, "Failed for {nums:?}");
+        }
+    }
+
+    #[test]
+    fn test_find_content_children() {
+        for (mut greed, mut sizes, expected) in [
+            (vec![ 1, 2, 3 ], vec![ 1, 1 ], 1),
+            (vec![ 1, 2 ], vec![ 1, 2, 3 ],  2),
+        ] {
+            assert_eq!(find_content_children(&mut greed, &mut sizes), expected,
+                       "Failed for {greed:?} x {sizes:?}");
         }
     }
 
