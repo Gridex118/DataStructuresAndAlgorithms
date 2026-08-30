@@ -18,7 +18,7 @@ pub fn sum_triangle_from_array(arr: &[i32], row: usize) -> Vec<Vec<i32>> {
 pub fn array_min_and_max(arr: &[i32]) -> Option<(i32, i32)> {
     if arr.is_empty() {
         return None;
-    } else if arr.len() == 1 {
+    } else if arr.len() == 2 {
         return Some((arr[0], arr[1]));
     }
     let n = arr.len();
