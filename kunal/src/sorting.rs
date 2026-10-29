@@ -1,3 +1,5 @@
+use std::collections::{HashMap, HashSet};
+
 /// Given 2 sorted arrays `nums1` and `nums2`, merge them into a single sorted array
 /// - Sort the elements into `nums1`,
 ///   given that `nums1` contains enough space for elements fo `nums2`
@@ -307,6 +309,214 @@ pub fn height_checker(heights: &[i32]) -> i32 {
         .count() as i32
 }
 
+/// Sort the elements of arr1 such that the relative ordering
+/// of items in arr1 are the same as in arr2.
+/// Elements that do not appear in arr2 should be placed at the end of
+/// arr1 in ascending order.
+pub fn relative_sort_array(arr1: &[i32], arr2: &[i32]) -> Vec<i32> {
+    let arr1 = Vec::from(arr1);
+    let mut arr1_count = HashMap::new();
+    for x in arr1 {
+        *arr1_count.entry(x).or_insert(0) += 1;
+    }
+    let mut result = Vec::new();
+    for &x in arr2 {
+        if let Some(freq) = arr1_count.remove(&x) {
+            for _ in 0..freq {
+                result.push(x);
+            }
+        }
+    }
+    let mut remaining: Vec<i32> = arr1_count.keys().cloned().collect();
+    remaining.sort();
+    for x in remaining {
+        for _ in 0..arr1_count[&x] {
+            result.push(x);
+        }
+    }
+    result
+}
+
+/// Given an array of distinct integers arr, find all pairs of
+/// elements with the minimum absolute difference of any two elements.
+/// Return a list of pairs in ascending order(with respect to pairs)
+pub fn minimum_absolute_difference(arr: &mut [i32]) -> Vec<Vec<i32>> {
+    arr.sort();
+    let min_abs_diff = arr.windows(2)
+        .map(|w| w[1] - w[0])
+        .min()
+        .unwrap();
+    arr.windows(2)
+        .filter(|w| w[1] - w[0] == min_abs_diff)
+        .map(|w| w.to_vec()).collect()
+}
+
+/// Given an array of integers `arr`, replace each element with its rank.
+/// The rank represents how large the element is. The rank has the following rules:
+///
+/// - Rank is an integer starting from 1.
+///
+/// - The larger the element, the larger the rank. If two elements are equal, their rank must be the same.
+///
+/// - Rank should be as small as possible.
+pub fn array_rank_transform(arr: &[i32]) -> Vec<i32> {
+    let mut arr_sorted = arr.to_vec();
+    arr_sorted.sort();
+    arr_sorted.dedup();
+    arr.iter()
+        .map(|val| (arr_sorted.binary_search(val).unwrap() as i32) + 1)
+        .collect()
+}
+
+/// You are given an integer array arr. Sort the integers in the array
+/// in ascending order by the number of 1's in their binary
+/// representation and in case of two or more integers have the same
+/// number of 1's you have to sort them in ascending order. Return the
+/// array after sorting it.
+pub fn sort_by_bits(arr: &[i32]) -> Vec<i32> {
+    let mut arr = arr.iter()
+        .map(|&b| (b.count_ones(), b))
+        .collect::<Vec<(u32, i32)>>();
+    arr.sort();
+    arr.iter().map(|t| t.1).collect()
+}
+
+/// Given the array `nums`, for each `nums[i]` find out how many numbers
+/// in the array are strictly smaller than it.
+pub fn smaller_numbers_than_current(nums: &[i32]) -> Vec<i32> {
+    let mut nums_sorted = nums.to_vec();
+    nums_sorted.sort();
+    nums.iter()
+        .map(|x| {
+            nums_sorted.partition_point(|y| y < x) as i32
+        })
+        .collect()
+}
+
+/// You are given an array of integers `nums`. Choose two different
+/// indices `i` and `j` of that array. Return the maximum value of
+/// `(nums[i] - 1) * (nums[j] - 1)`
+/// - 2 <= nums.length <= 500
+///
+/// - 1 <= nums[i] <= 10^3
+pub fn max_product(nums: &[i32]) -> i32 {
+    let mut max_first = 0;
+    let mut max_second = 0;
+    for &x in nums {
+        if x > max_first {
+            (max_second, max_first) = (max_first, x);
+        } else if x > max_second {
+            max_second = x;
+        }
+    }
+    (max_first - 1) * (max_second - 1)
+}
+
+/// Return the average salary of employees excluding
+/// the minimum and maximum salary.
+pub fn average_salary(salary: &[i32]) -> f64 {
+    let min = salary.iter().min().unwrap();
+    let max = salary.iter().max().unwrap();
+    let mut sum = 0;
+    for x in salary {
+        if x != min && x != max {
+            sum += x;
+        }
+    }
+    sum as f64 / (salary.len() - 2) as f64
+}
+
+/// You are given two integer arrays of equal length `target` and `array`.
+/// In one step, you can select any non-empty subarray of `arr` and reverse it.
+/// You are allowed to make any number of steps.
+/// Return true if you can make `arr` equal to `target` or false otherwise
+pub fn can_be_equal(target: &mut [i32], arr: &mut [i32]) -> bool {
+    target.sort();
+    arr.sort();
+    target == arr
+}
+
+/// Given an array of integers `nums`, sort the array in increasing order
+/// based on the frequency of the values. If multiple values have the
+/// same frequency, sort them in decreasing order
+pub fn frequency_sort(nums: &[i32]) -> Vec<i32> {
+    let mut frequency_map: HashMap<i32, i32> = HashMap::new();
+    for &x in nums {
+        *(frequency_map.entry(x).or_insert(0)) += 1;
+    }
+    let mut sorted = nums.to_vec();
+    sorted.sort_by(|a, b| {
+        match frequency_map[a].cmp(&frequency_map[b]) {
+            std::cmp::Ordering::Equal => b.cmp(&a),
+            ord => ord
+        }
+    });
+    sorted
+}
+
+/// You are given an array `nums` of non-negative integers. `nums` is
+/// considered special if there exists a number x such that there are
+/// exactly x numbers in `nums` that are greater than or equal to x.
+/// 
+/// Return x if the array is special, otherwise, return -1. x is unique.
+pub fn special_array(nums: &mut [i32]) -> i32 {
+    nums.sort();
+    for &num in nums.iter().rev() {
+        let x = nums.partition_point(|&y| y <= num) as i32;
+        if x <= num {
+            return x;
+        }
+    }
+    -1
+}
+
+/// Given an array `nums` of n integers where nums[i] is in the range
+/// [1, n], return an array of all the integers in the range [1, n]
+/// [1, n] that do not appear in `nums`
+pub fn find_disappeared_numbers(nums: &mut [i32]) -> Vec<i32> {
+    let mut i = 0;
+    let n = nums.len();
+    while i < n {
+        let j = nums[i] as usize - 1;
+        if nums[j] != nums[i] {
+            nums.swap(i, j);
+        } else {
+            i += 1;
+        }
+    }
+    nums.iter().enumerate()
+        .filter(|&(i, &x)| i as i32 + 1 != x)
+        .map(|(i, _)| i as i32 + 1)
+        .collect()
+}
+
+/// You have a set of integers s, which originally contains all the
+/// numbers from 1 to n. Unfortunately, due to some error, one of the
+/// numbers in s got duplicated to another number in the set, which
+/// results in repetition of one number and loss of another number.
+///
+/// You are given an integer array `nums` representing the data status of
+/// this set after the error. Find the number that occurs twice and the
+/// number that is missing and return them in the form of an array.
+pub fn find_error_nums(nums: &mut [i32]) -> Vec<i32> {
+    let mut i = 0;
+    let n = nums.len();
+    while i < n {
+        let j = nums[i] as usize - 1;
+        if nums[j] != nums[i] {
+            nums.swap(i, j);
+        } else {
+            i += 1;
+        }
+    }
+    for (i, &x) in nums.iter().enumerate() {
+        let i = i as i32;
+        if i + 1 != x {
+            return vec![x, i + 1];
+        }
+    }
+    unreachable!();
+}
 
 #[cfg(test)]
 mod tests {
@@ -504,6 +714,146 @@ mod tests {
         ] {
             assert_eq!(height_checker(&heights), expected,
                        "Failed for {heights:?}");
+        }
+    }
+
+    #[test]
+    fn test_relative_sort_array() {
+        for (arr1, arr2, expected) in [
+            (vec![2, 3, 1, 3, 2, 4, 6, 7, 9, 2, 19],
+             vec![2, 1, 4, 3, 9, 6],
+             vec![2, 2, 2, 1, 4, 3, 3, 9, 6, 7, 19]),
+            (vec![28, 6, 22, 8, 44, 17],
+             vec![22, 28, 8, 6],
+             vec![22, 28, 8, 6, 17, 44]),
+        ] {
+            assert_eq!(relative_sort_array(&arr1, &arr2), expected,
+                       "Failed for {arr1:?}, {arr2:?}")
+        }
+    }
+
+    #[test]
+    fn test_minimum_absolute_difference() {
+        for (mut arr1, expected) in [
+            (vec![ 4, 2, 1, 3 ], vec![ [1, 2], [2, 3], [3, 4] ]),
+            (vec![ 1, 3, 6, 10, 15 ], vec![ [1, 3] ]),
+        ] {
+            assert_eq!(minimum_absolute_difference(&mut arr1), expected);
+        }
+    }
+
+    #[test]
+    fn test_array_rank_transform() {
+        for (arr, expected) in [
+            (vec![ 40, 10, 20, 30 ], vec![ 4, 1, 2, 3 ]),
+            (vec![ 100, 100, 100 ], vec![ 1, 1, 1 ]),
+            (vec![ 37, 12, 28, 9, 100, 56, 80, 5, 12 ], vec![ 5, 3, 4, 2, 8, 6, 7, 1, 3 ])
+        ] {
+            assert_eq!(array_rank_transform(&arr), expected);
+        }
+    }
+
+    #[test]
+    fn test_sort_by_bits() {
+        for (arr, expected) in [
+            (vec![ 0, 1, 2, 3, 4, 5, 6, 7, 8 ],
+             vec![ 0, 1, 2, 4, 8, 3, 5, 6, 7 ]),
+            (vec![ 1024, 512, 256, 128, 64, 32, 16, 8, 4, 2, 1 ],
+             vec![ 1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024 ]),
+        ] {
+            assert_eq!(sort_by_bits(&arr), expected);
+        }
+    }
+
+    #[test]
+    fn test_smaller_numbers_than_current() {
+        for (arr, expected) in [
+            (vec![ 8, 1, 2, 2, 3 ], vec![ 4, 0, 1, 1, 3 ]),
+            (vec![ 6, 5, 4, 8 ], vec![ 2, 1, 0, 3 ]),
+            (vec![ 7, 7, 7, 7 ], vec![ 0, 0, 0, 0 ]),
+        ] {
+            assert_eq!(smaller_numbers_than_current(&arr), expected);
+        }
+    }
+
+    #[test]
+    fn test_max_product() {
+        for (nums, expected) in [
+            (vec![3, 4, 5, 2], 12),
+            (vec![1, 5, 4, 5], 16)
+        ] {
+            assert_eq!(max_product(&nums), expected);
+        }
+    }
+
+    #[test]
+    fn test_average_salary() {
+        for (salary, expected) in [
+            (vec![ 4000, 3000, 1000, 2000 ], 2500.0_f64),
+            (vec![ 1000, 2000, 3000 ], 2000.0_f64),
+        ] {
+            assert_eq!(average_salary(&salary), expected);
+        }
+    }
+
+    #[test]
+    fn test_can_be_equal() {
+        for (mut target, mut arr, expected) in [
+            (vec![ 1, 2, 3, 4 ], vec![ 2, 4, 1, 3 ], true),
+            (vec![ 7 ], vec![ 7 ], true),
+            (vec![ 3, 7, 9 ], vec![ 3, 7, 11 ], false),
+        ] {
+            assert_eq!(can_be_equal(&mut target, &mut arr), expected,
+                       "Failed for {target:?}, {arr:?}");
+        }
+    }
+
+    #[test]
+    fn test_frequency_sort() {
+        for (nums, expected) in [
+            (vec![ 1, 1, 2, 2, 2, 3 ], vec![ 3, 1, 1, 2, 2, 2 ]),
+            (vec![ 2, 3, 1, 3, 2 ], vec![ 1, 3, 3, 2, 2 ]),
+            (vec![ -1, 1, -6, 4, 5, -6, 1, 4, 1 ],
+             vec![ 5, -1, 4, 4, -6, -6, 1, 1, 1 ]),
+        ] {
+            assert_eq!(frequency_sort(&nums), expected,
+                       "Frequency Sort failed for {nums:?}");
+        }
+    }
+
+    #[test]
+    fn test_special_array() {
+        for (mut nums, expected) in [
+            (vec![ 3, 5 ], 2),
+            (vec![ 0, 0 ], -1),
+            (vec![ 0, 4, 3, 0, 4 ], 3)
+        ] {
+            assert_eq!(special_array(&mut nums), expected,
+                       "Failed special array for {nums:?}")
+        }
+    }
+
+    #[test]
+    fn test_find_disappeared_numbers() {
+        for (nums, expected) in [
+            (vec![ 4, 3, 2, 7, 8, 2, 3, 1 ], vec![ 5, 6 ]),
+            (vec![ 1, 1 ], vec![ 2 ])
+        ] {
+            let mut nums_copy = nums.to_vec();
+            assert_eq!(find_disappeared_numbers(&mut nums_copy), expected,
+                       "Failed to find disappeared numbers for {nums:?}");
+        }
+    }
+
+    #[test]
+    fn test_find_error_nums() {
+        for (nums, expected) in [
+            (vec![ 1, 2, 2, 4 ], vec![ 2, 3 ]),
+            (vec![ 1, 1 ], vec![ 1, 2 ])
+        ] {
+            let mut nums_mut = nums.to_vec();
+            assert_eq!(find_error_nums(&mut nums_mut), expected,
+                       "Failed find_error_nums for {nums:?}");
         }
     }
 
