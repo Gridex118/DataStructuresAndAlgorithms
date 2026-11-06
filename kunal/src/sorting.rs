@@ -1,4 +1,4 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::{HashMap};
 
 /// Given 2 sorted arrays `nums1` and `nums2`, merge them into a single sorted array
 /// - Sort the elements into `nums1`,
